@@ -1,6 +1,5 @@
 # Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS
 
-
 You can use the Azure Database Migration Service to migrate the databases from an on-premises PostgreSQL instance to Azure Database for PostgreSQL with minimal downtime. In other words, migration can be achieved with minimum downtime to the application. In this tutorial, you migrate the DVD Rental sample database from an on-premises instance of PostgreSQL 9.6 to Azure Database for PostgreSQL by using an online migration activity in the Azure Database Migration Service.
 
 In this tutorial, you learn how to:
@@ -33,17 +32,14 @@ For more information about using the pg_dump utility, see the examples in the pg
 3. Import the schema into the target database you created by restoring the schema dump file.
 ```
 psql -h hostname -U db_username -d db_name < your_schema.sql 
-``
+```
 For example:
 ```
 psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrental < dvdrentalSchema.sql
 ```
 4. If you have foreign keys in your schema, the initial load and continuous sync of the migration will fail. Execute the following script in PgAdmin or in psql to extract the drop foreign key script and add foreign key script at the destination (Azure Database for PostgreSQL).
 ```
-SELECT Queries.tablename
-       ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('DROP CONSTRAINT ', Queries.foreignkey), ',')) as DropQuery
-            ,concat('alter table ', Queries.tablename, ' ', 
-                                            STRING_AGG(concat('ADD CONSTRAINT ', Queries.foreignkey, ' FOREIGN KEY (', column_name, ')', 'REFERENCES ', foreign_table_name, '(', foreign_column_name, ')' ), ',')) as AddQuery
+SELECT Queries.tablename ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('DROP CONSTRAINT ', Queries.foreignkey), ',')) as DropQuery ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('ADD CONSTRAINT ', Queries.foreignkey, ' FOREIGN KEY (', column_name, ')', 'REFERENCES ', foreign_table_name, '(', foreign_column_name, ')' ), ',')) as AddQuery
     FROM
     (SELECT
     tc.table_schema, 
@@ -96,7 +92,7 @@ az extension add –n dms-preview
 ** To verify you have dms extension installed correct, run the following command:
 ```
 az extension list -otable
-      
+```      
 ** You should see the following output:
 ```
 ExtensionType    Name
@@ -223,6 +219,7 @@ At this point, you've successfully submitted a migration task.
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
+```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
 ```
 8. You can also query for the migrationState from the expand output:
@@ -338,23 +335,24 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 * Delete the task
 * Delete the project
 * Delete DMS service
-To cancel a running task, use the following command:
+
+3. To cancel a running task, use the following command:
 ```
 az dms project task cancel --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-To delete a running task, use the following command:
+4. To delete a running task, use the following command:
 ```
 az dms project task delete --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-To cancel a running project, use the following command:
+5. To cancel a running project, use the following command:
 ```
 az dms project task cancel -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
 ```
-To delete a running project, use the following command:
+6. To delete a running project, use the following command:
 ```
 az dms project task delete -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
 ```
-To delete DMS service, use the following command:
+7. To delete DMS service, use the following command:
 ```
 az dms delete -g ProgresDemo -n PostgresCLI
 ```
