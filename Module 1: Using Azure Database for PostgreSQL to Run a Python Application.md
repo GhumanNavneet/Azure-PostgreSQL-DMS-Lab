@@ -25,7 +25,7 @@ ALLOWED_HOSTS = "*"
 9.	Run migration and serve the app
 
 ``
-Python manage.py migrate
+Python manage.py migrate<br/>
 Python manage.py runserver 0.0.0.0:8000
 ``
 
