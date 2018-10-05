@@ -17,7 +17,7 @@ For an optimal migration experience, Microsoft recommends creating an instance o
 ## 1.1: Migrate the sample schema
 To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.
 1. Login to **dms-dev-vm** through **Remote Desktop Connection**
-2. Inside the virtual machine open **command prompt** from **start** button, run it as **administrator** and change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
+2. Inside the virtual machine click on **Start** button search for **command prompt**, run it as **administrator** and change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
 ```
 cd C:\Program Files\PostgreSQL\9.6\bin
 ```
