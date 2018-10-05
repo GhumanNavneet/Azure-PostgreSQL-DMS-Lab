@@ -86,8 +86,9 @@ az postgres server firewall-rule create --resource-group <resource group name>  
 4.	Hit **Enter**.<br/>
 5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
 ```
-az postgres server show --resource-group <resourcegroupname> --name pqsql
+az postgres server show --resource-group <resourcegroupname> --name <server name>
 ```
+<img src="images/posti7.jpg"/><br/>
 6.	Hit **Enter**.
 
 ## 1.3:  Create and connect to your PostgreSQL database using psql
@@ -252,7 +253,7 @@ vim local.py
 
 *  Type **i** to enter **INSERT** mode.
 
-*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and * with a **comma**.  
+*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and "*" with a **comma**.  
 
 19.	**Save** the changes to **local.py**.<br/>
 * **Press** the **ESC** key.<br/>
