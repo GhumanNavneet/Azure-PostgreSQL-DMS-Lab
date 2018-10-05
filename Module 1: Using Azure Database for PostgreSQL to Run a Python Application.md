@@ -45,7 +45,7 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 
 ## 1.2	Create an **Azure Database for PostgreSQL** instance
 
-1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:
+1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
 ```
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
@@ -53,7 +53,7 @@ az postgres server create --resource-group <resource group name> --name <postgre
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
 2.	Hit **Enter**
-The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.
+The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.<br/><br/>
      > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
  ```
  {
@@ -78,17 +78,17 @@ The result is output to the screen in JSON format as shown in the example below.
   "version": "9.6"
   }
   ```
-3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.
+3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.<br/>
 ```
 az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
 ```
 <img src="images/post6.jpg"/><br/>
-4.	Hit **Enter**
+4.	Hit **Enter**.<br/>
 5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
 ```
 az postgres server show --resource-group <resourcegroupname> --name pqsql
 ```
-6.	Hit **Enter**
+6.	Hit **Enter**.
 
 ## 1.3 Create and connect to your PostgreSQL database using psql
 
@@ -97,7 +97,9 @@ az postgres server show --resource-group <resourcegroupname> --name pqsql
 psql --host=<server name> --port=5432 --username=<server admin login name> --dbname=postgres
 ```
 <img src="images/post7.jpg"/><br/>
-2.	You will be prompted for a password. Type **P@ssword1** at the prompt and hit **Enter**.
+
+2.	You will be prompted for a password. Type **P@ssword1** at the prompt and hit **Enter**.<br/>
+    
     >Important Note: the psql prompt will not echo what you type. Use care to type or paste the password into the CLI window exactly. If you see the error "FATAL: SSL connection is required." your password may not have been accepted and you should repeat the psql command above and re-enter the password carefully.
     
 3.	Once you are connected to the server with psql, create a blank database for your Python app to use. At the prompt, type the following command and hit **Enter**:
@@ -146,15 +148,15 @@ az vm create --resource-group <resource group name> --name myubuntu --vnet-name 
 az vm open-port --port 8000 --resource-group <resource group name> --name <virtual machine name>
 ```
 <img src="images/post10.jpg"/><br/>
-5.	Hit **Enter**
+5.	Hit **Enter**.
 6.	Connect to the VM using SSH in the Azure CLI.
 ```
 ssh [publicIpAddress]
 ```
 <img src="images/post11.jpg"/><br/>
    >Note: Replace [publicIpAddress] with the IP address of your server (without brackets) noted in the previous step (2).
-7.	Hit **Enter**
-8.	When prompted to continue, type yesand hit **Enter**
+7.	Hit **Enter**.
+8.	When prompted to continue, type yesand hit **Enter**.
 
 ## 1.5 Configure the Bootcamp Application
 
