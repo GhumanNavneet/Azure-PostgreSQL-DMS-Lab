@@ -13,24 +13,26 @@ Throughout this lab, we will use the **Azure Command Line Interface** or **Azure
 
 This hands-on lab will step you through the following:
 
-1.1	 Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
-1.2	 Create an Azure Database for PostgreSQL instance.
-1.2.1  Create and connect to your PostgreSQL database using psql
-1.3	 Create an Ubuntu Azure VM.
-1.4	 Configure the Bootcamp Application 
+1.1	 Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.<br/>
+1.2	 Create an Azure Database for PostgreSQL instance.<br/>
+1.2.1  Create and connect to your PostgreSQL database using psql.<br/>
+1.3	 Create an Ubuntu Azure VM.<br/>
+1.4	 Configure the Bootcamp Application.<br/>
 
 
 ## 1.1	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
 
 1.  **Navigate** to https://portal.azure.com and login (from the previous step).
-2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.  
-3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.
+2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
+<img src="images/username1.jpg"/><br/>
+3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.<br/>
+<img src="images/password1.jpg"/><br/>
 4.	In the Welcome to **Microsoft Azure** pop-up window, click **Maybe Late**r. Initialize the **Azure CLI**.
 5.	To launch the **Azure Cloud Shell**, click the **Cloud Shell** button on the menu in the top menu bar of the Azure portal. The button launches an interactive shell that you can use to run all of the steps required to create and manage an Ubuntu Linux VM.<br/>
-<img src="images/post1.jpg"/><br/>
+<img src="images/shell.jpg"/><br/>
 6.	Once the shell launches, you will see **Welcome to Azure Cloud Shell**. Click on the **Bash (Linux)** option at the bottom.<br/>
 <img src="images/post1.jpg"/><br/>
-7.	In the **You have no storage mounted** tab, click Show Advanced Settings.<br/>
+7.	In the **You have no storage mounted** tab, click on **Show Advanced Settings**.<br/>
 <img src="images/post2.jpg"/><br/>
 8.	In the **Advanced Settings** tab, use the existing **Resource Group** and enter a unique name for the **Storage Account** and **File Share**.<br/>
 <img src="images/post3.jpg"/><br/>
@@ -51,17 +53,6 @@ az postgres server create --resource-group <resource group name> --name <postgre
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
 2.	Hit **Enter**
-3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.
-```
-az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
-```
-<img src="images/post6.jpg"/><br/>
-4.	Hit **Enter**
-5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
-```
-az postgres server show --resource-group <resourcegroupname> --name pqsql
-```
-6.	Hit **Enter**
 The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.
      > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
  ```
@@ -87,13 +78,25 @@ The result is output to the screen in JSON format as shown in the example below.
   "version": "9.6"
   }
   ```
+3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.
+```
+az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+```
+<img src="images/post6.jpg"/><br/>
+4.	Hit **Enter**
+5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
+```
+az postgres server show --resource-group <resourcegroupname> --name pqsql
+```
+6.	Hit **Enter**
+
 ## 1.2.1 Create and connect to your PostgreSQL database using psql
 
 1.	Type the following psql command in **Azure Cloud Shell** and hit **Enter**:
 ```
 psql --host=<server name> --port=5432 --username=<server admin login name> --dbname=postgres
 ```
-<img src="images/module3.jpg"/><br/>
+<img src="images/post7.jpg"/><br/>
 2.	You will be prompted for a password. Type **P@ssword1** at the prompt and hit **Enter**.
     >Important Note: the psql prompt will not echo what you type. Use care to type or paste the password into the CLI window exactly. If you see the error "FATAL: SSL connection is required." your password may not have been accepted and you should repeat the psql command above and re-enter the password carefully.
     
@@ -109,6 +112,7 @@ create database bootcamp;
 ```
 \q
 ```
+<img src="images/post8.jpg"/><br/>
 
 ## 1.3	 Create an Ubuntu Azure VM
 
@@ -116,7 +120,7 @@ create database bootcamp;
 ```
 az vm create --resource-group <resource group name> --name myubuntu --vnet-name myvnet --image ubuntults --generate-ssh-keys
 ```
-<img src="images/module3.jpg"/><br/>
+<img src="images/post9.jpg"/><br/>
 2.	Hit **Enter**
   >Note: Once the VM has been created, the Azure CLI outputs information about the VM. Take note of the publicIpAddress, this address can be used to access the virtual machine..
 ```
@@ -132,20 +136,22 @@ az vm create --resource-group <resource group name> --name myubuntu --vnet-name 
 }
 ```
    >Note: If you should get a "Cloud Shell timed out" in the Azure Bash Shell, select reconnect. Once the shell provisions again, you may continue with your next step.
+   
    >Note: To find the public IP address for the Ubuntu Server go to the Azure Portal and Select Virtual Machines from the resource Blade.
+   
 3. Select **MyUbuntu** from the **Virtual Machine** List. Highlight **Overview** and view the **Public IP address** on the right side.
-<img src="images/module3.jpg"/><br/>
+<img src="images/vm.jpg"/><br/>
 4.	By default, only **SSH connections** are allowed into **Linux virtual machines** deployed in Azure. This VM is going to be a webserver, so you need to open a port from the Internet. Use the **az vm open-port** command to open the desired port.
 ```
 az vm open-port --port 8000 --resource-group <resource group name> --name <virtual machine name>
 ```
-<img src="images/module3.jpg"/><br/>
+<img src="images/post10.jpg"/><br/>
 5.	Hit **Enter**
 6.	Connect to the VM using SSH in the Azure CLI.
 ```
 ssh [publicIpAddress]
 ```
-<img src="images/module3.jpg"/><br/>
+<img src="images/post11.jpg"/><br/>
    >Note: Replace [publicIpAddress] with the IP address of your server (without brackets) noted in the previous step (2).
 7.	Hit **Enter**
 8.	When prompted to continue, type yesand hit **Enter**
@@ -168,6 +174,7 @@ sudo apt install python3-pip
 ```
 git clone https://github.com/vitorfs/bootcamp.git 
 ```
+<img src="images/post12.jpg"/><br/>
   >Note: Feel free to browse to Github and have a look at the Bootcamp repo to learn about what the application does: https://github.com/vitorfs/bootcamp.git 
   
 6.	In your shell, type the following and hit **Enter**:
@@ -176,6 +183,7 @@ git clone https://github.com/vitorfs/bootcamp.git
 7.	Select release **1.0.4** of the Bootcamp application, In your shell, type the following and hit **Enter**:
 ```git reset --hard c15452cef893b36fb9f82dda0239983333c3ecf4
 ```
+<img src="images/post13.jpg"/><br/>
 8.	**Run** the following command to install the extension tool.
 ```
 sudo apt-get install postgresql-server-dev-all
