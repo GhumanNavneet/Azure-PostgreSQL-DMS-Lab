@@ -25,7 +25,8 @@ ALLOWED_HOSTS = "*"
 9.	Run migration and serve the app
 
 ``
-Python manage.py migrate<br/>
+Python manage.py migrate
+
 Python manage.py runserver 0.0.0.0:8000
 ``
 
@@ -61,7 +62,7 @@ Create an Azure PostGreSQL Database Server**
 
 11. A server contains a group of databases. You can create an Azure Database for PostgreSQL server using the az postgres server create command. Copy and paste the following into the Azure command line:
 ```
-az postgres server create --resource-group <inject story-id="story://Content-Private/content/dfd/SP-OSS/postgresql/ossexperience1/story_a_postgresql" key="resourceGroupName" copy="false" /> --name pqsql<inject story-id="story://Content-Private/content/dfd/SP-OSS/postgresql/ossexperience1/story_a_postgresql" key="resourceGroupName" copy="false" /> --location southcentralus --admin-user pgsqluser --admin-password P@ssword1 --sku-name GP_Gen4_2 --storage-size 51200
+az postgres server create --resource-group <resourcegroupname> --name <postgresqlservername> --location southcentralus --admin-user <adminname> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
   
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
