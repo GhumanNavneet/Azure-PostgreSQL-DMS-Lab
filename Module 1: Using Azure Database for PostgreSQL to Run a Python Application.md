@@ -52,7 +52,7 @@ az postgres server create --resource-group <resource group name> --name <postgre
 <br/><img src="images/post5.jpg"/><br/>
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
-2.	Hit **Enter**
+2.	Hit **Enter**.
 The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.<br/><br/>
      > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
  ```
@@ -123,7 +123,7 @@ create database bootcamp;
 az vm create --resource-group <resource group name> --name myubuntu --vnet-name myvnet --image ubuntults --generate-ssh-keys
 ```
 <img src="images/post9.jpg"/><br/>
-2.	Hit **Enter**
+2.	Hit **Enter**.
   >Note: Once the VM has been created, the Azure CLI outputs information about the VM. Take note of the publicIpAddress, this address can be used to access the virtual machine..
 ```
 {    
@@ -142,13 +142,14 @@ az vm create --resource-group <resource group name> --name myubuntu --vnet-name 
    >Note: To find the public IP address for the Ubuntu Server go to the Azure Portal and Select Virtual Machines from the resource Blade.
    
 3. Select **MyUbuntu** from the **Virtual Machine** List. Highlight **Overview** and view the **Public IP address** on the right side.<br/>
+
 <img src="images/vm.jpg"/><br/>
 4.	By default, only **SSH connections** are allowed into **Linux virtual machines** deployed in Azure. This VM is going to be a webserver, so you need to open a port from the Internet. Use the **az vm open-port** command to open the desired port.
 ```
 az vm open-port --port 8000 --resource-group <resource group name> --name <virtual machine name>
 ```
 <img src="images/post10.jpg"/><br/>
-5.	Hit **Enter**.
+5.	Hit **Enter**.<br/>
 6.	Connect to the VM using SSH in the Azure CLI.
 ```
 ssh [publicIpAddress]
@@ -248,12 +249,16 @@ cd config/settings
 vim local.py
 ```
 18.	Append the **ALLOWED_HOSTS** parameter.
+
 *  Type **i** to enter **INSERT** mode.
+
 *  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and * with a **comma**.  
+
 19.	**Save** the changes to **local.py**.<br/>
 * **Press** the **ESC** key.<br/>
 *  Type **:wr** and hit **Enter**.<br/><br/>
-20.	Change the directory back to bootcamp
+
+20.	Change the directory back to bootcamp with following comand.
 ```
 cd ~/bootcamp
 ```
@@ -289,7 +294,7 @@ psql --host=<servver name> --port=5432 --username=<server admin login name> --db
 28.	If prompted for a password, type P@ssword1 at the prompt and hit **Enter**.
 
   >Note: the psql shell will not echo what you type.
-29.	Type in the following command and hit **Enter**
+29.	Type in the following command and hit **Enter**.
 ```
 SELECT * FROM feeds_feed;
 ```
