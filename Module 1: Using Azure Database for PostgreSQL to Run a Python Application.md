@@ -13,11 +13,11 @@ Throughout this lab, we will use the **Azure Command Line Interface** or **Azure
 
 This hands-on lab will step you through the following:
 
-1.1	 Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.<br/>
-1.2	 Create an Azure Database for PostgreSQL instance.<br/>
-1.2.1  Create and connect to your PostgreSQL database using psql.<br/>
-1.3	 Create an Ubuntu Azure VM.<br/>
-1.4	 Configure the Bootcamp Application.<br/>
+1.1	  **Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.**<br/>
+1.2	  **Create an Azure Database for PostgreSQL instance.**<br/>
+1.2.1   **Create and connect to your PostgreSQL database using psql.**<br/>
+1.3	  **Create an Ubuntu Azure VM.**<br/>
+1.4	  **Configure the Bootcamp Application.**<br/>
 
 
 ## 1.1	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
