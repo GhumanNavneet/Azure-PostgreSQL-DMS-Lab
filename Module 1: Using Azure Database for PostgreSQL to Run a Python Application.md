@@ -13,14 +13,14 @@ Throughout this lab, we will use the **Azure Command Line Interface** or **Azure
 
 This hands-on lab will step you through the following:
 
-1.1	   **Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.**<br/>
-1.2	   **Create an Azure Database for PostgreSQL instance.**<br/>
-1.3      **Create and connect to your PostgreSQL database using psql.**<br/>
-1.4	   **Create an Ubuntu Azure VM.**<br/>
-1.5	   **Configure the Bootcamp Application.**<br/>
+1.1 :   **Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.**<br/>
+1.2 :	  **Create an Azure Database for PostgreSQL instance.**<br/>
+1.3 :   **Create and connect to your PostgreSQL database using psql.**<br/>
+1.4 :   **Create an Ubuntu Azure VM.**<br/>
+1.5 :   **Configure the Bootcamp Application.**<br/>
 
 
-## 1.1	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+## 1.1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
 
 1.  **Navigate** to https://portal.azure.com and login (from the previous step).
 2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
@@ -43,7 +43,7 @@ This hands-on lab will step you through the following:
    > Note: the Resource Group name, the Storage Account, and the File Share you created are displayed in the CLI while it initializes.
 You may enlarge the shell by dragging the border or clicking on the maximize button on ht etop right of the shell.
 
-## 1.2	Create an **Azure Database for PostgreSQL** instance
+## 1.2:	Create an **Azure Database for PostgreSQL** instance
 
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
 ```
@@ -90,7 +90,7 @@ az postgres server show --resource-group <resourcegroupname> --name pqsql
 ```
 6.	Hit **Enter**.
 
-## 1.3 Create and connect to your PostgreSQL database using psql
+## 1.3:  Create and connect to your PostgreSQL database using psql
 
 1.	Type the following psql command in **Azure Cloud Shell** and hit **Enter**:
 ```
@@ -116,7 +116,7 @@ create database bootcamp;
 ```
 <img src="images/post8.jpg"/><br/>
 
-## 1.4	 Create an Ubuntu Azure VM
+## 1.4:	 Create an Ubuntu Azure VM
 
 1.	Create a virtual machine with the **az vm create** command in cloud shell. When creating a virtual machine, several options are available such as operating system image, disk sizing, and administrative credentials. In this example, a virtual machine is created with a name of **myVM** running Ubuntu Server.
 ```
@@ -158,7 +158,7 @@ ssh [publicIpAddress]
 7.	Hit **Enter**.
 8.	When prompted to continue, type yesand hit **Enter**.
 
-## 1.5 Configure the Bootcamp Application
+## 1.5: Configure the Bootcamp Application
 
 1.	Now you are at the shell of your new Ubuntu VM. Let's update the package index in Ubuntu, so that we have a recent list of the package repository
 2.	In your shell, type the following command and hit **Enter**:
