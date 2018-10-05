@@ -110,7 +110,7 @@ az dms -h
 ```
 az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
 ```
-3. Next, create a **PostgreSQL** migration **project** by running the following command:
+2. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
 az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
 ```
@@ -125,7 +125,7 @@ For example, the following command creates a project using these parameters:
 ```
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
-4. Create a **PostgreSQL** migration task using the following steps.
+3. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the source IP, UserID and password, destination IP, UserID, password, and task type to establish connectivity.
 
 * To see a full list of options, run the command:
@@ -179,14 +179,14 @@ az dms project task create -g <resource group name> --project-name <project name
 ```
 At this point, you've successfully submitted a migration task.
 
-5. To show progress of the task, run the following command:
+4. To show progress of the task, run the following command:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
 ```
-6. You can also query for the migrationState from the expand output:
+5. You can also query for the migrationState from the expand output:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
