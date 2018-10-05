@@ -234,9 +234,9 @@ ALLOWED_HOSTS = "*"
 ```
    >Note: If you look at the credentials closely, you will notice we are using the new Azure Database for PostgreSQL service to connect to this app, and we have pre-populated the connection string.
 15.	On the **VIM Editor Terminal**, to come out of the editing mode.<br/>
-A: Press the **ESC** key.<br/>
-B: Type **:wr** and hit **Enter**. This writes in the file **.env** and saves it.<br/>
-C: Type **:q** and hit **Enter** to leave VIM.<br/>
+* Press the **ESC** key.<br/>
+* Type **:wr** and hit **Enter**. This writes in the file **.env** and saves it.<br/>
+* Type **:q** and hit **Enter** to leave VIM.<br/>
 16.	Next, we need to allow the host to communicate outside of the environment. Change the directory to bootcamp/config/settings
 ```
 cd config/settings
