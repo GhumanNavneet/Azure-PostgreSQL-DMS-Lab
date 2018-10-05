@@ -1,4 +1,4 @@
-# Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS
+# Module 2: Migrate PostgreSQL to Azure Database for PostgreSQL online using DMS
 
 You can use the Azure Database Migration Service to migrate the databases from an on-premises PostgreSQL instance to Azure Database for PostgreSQL with minimal downtime. In other words, migration can be achieved with minimum downtime to the application. In this tutorial, you migrate the DVD Rental sample database from an on-premises instance of PostgreSQL 9.6 to Azure Database for PostgreSQL by using an online migration activity in the Azure Database Migration Service.
 
@@ -14,30 +14,33 @@ Important
 
 For an optimal migration experience, Microsoft recommends creating an instance of the Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
 
-## Migrate the sample schema
+## 1.1: Migrate the sample schema
 To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.
-
-1. Use pg_dump -s command to create a schema dump file for a database.
+1. Login to **dms-dev-vm** through **Remote Desktop Connection**
+2. Inside the virtual machine open **command prompt** from **start** button, run it as **adminstrator** and change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
+```
+cd C:\Program Files\PostgreSQL\9.6\bin
+```
+3. Use **pg_dump** command to create a **schema dump** file for a database.
 ```
 pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
 ```
-For example, to dump a schema file dvdrental database:
+For example, to dump a schema file **dvdrental** database:
 ```
 pg_dump -o -h localhost -U postgres -d dvdrental -s  > dvdrentalSchema.sql
 ```
-For more information about using the pg_dump utility, see the examples in the pg-dump tutorial.
 
-2. Create an empty database in your target environment, which is Azure Database for PostgreSQL.
+4. Create an empty database in your **target** environment, which is Azure Database for PostgreSQL.
 
-3. Import the schema into the target database you created by restoring the schema dump file.
+5. **Import** the schema into the target database you created by restoring the schema dump file.
 ```
 psql -h hostname -U db_username -d db_name < your_schema.sql 
 ```
-For example:
+**For example:**
 ```
 psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrental < dvdrentalSchema.sql
 ```
-4. If you have foreign keys in your schema, the initial load and continuous sync of the migration will fail. Execute the following script in PgAdmin or in psql to extract the drop foreign key script and add foreign key script at the destination (Azure Database for PostgreSQL).
+6. If you have **foreign keys** in your schema, the initial load and continuous sync of the migration will fail. Execute the following script in **PgAdmin** or in **psql** to extract the drop foreign key script and add foreign key script at the destination (Azure Database for PostgreSQL).
 ```
 SELECT Queries.tablename ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('DROP CONSTRAINT ', Queries.foreignkey), ',')) as DropQuery ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('ADD CONSTRAINT ', Queries.foreignkey, ' FOREIGN KEY (', column_name, ')', 'REFERENCES ', foreign_table_name, '(', foreign_column_name, ')' ), ',')) as AddQuery
     FROM
@@ -62,24 +65,24 @@ WHERE constraint_type = 'FOREIGN KEY') Queries
   ```
 Run the drop foreign key (which is the second column) in the query result.
 
-5. Triggers in the data (insert or update triggers) will enforce data integrity in the target ahead of the replicated data from the source. It is recommended that you disable triggers in all the tables at the target during migration and then re-enable the triggers after migration is complete.
+7. Triggers in the data (insert or update triggers) will enforce data integrity in the target ahead of the replicated data from the source. It is recommended that you disable triggers in all the tables at the target during migration and then re-enable the triggers after migration is complete.
 
 To disable triggers in target database, use the following command:
 ```
 select concat ('alter table ', event_object_table, ' disable trigger ', trigger_name)
 from information_schema.triggers;
 ```
-6. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
+8. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
 
-## Provisioning an instance of DMS using the CLI
+## 1.2: Provisioning an instance of DMS using the CLI
 1. Install the dms sync extension:
 
-* Sign in to Azure by running the following command:
+* Sign in to **Azure** by running the following command:
 ```
 az login
 ```
 * When prompted, open a web browser and enter a code to authenticate your device. Follow the instructions as listed.
-* Add the dms extension:
+* Add the **dms** extension:
 
 ** To list the available extensions, run the following command:
 ```
@@ -99,7 +102,7 @@ ExtensionType    Name
 ---------------  ------
 whl              dms
 ```
-** At any time, view all commands supported in DMS by running:
+** At any time, view all commands supported in **DMS** by running:
 ```
 az dms -h
 ```
@@ -107,20 +110,6 @@ az dms -h
 ```
 az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
 ```
-2. Provision an instance of DMS by running the following command:
-```
-az dms create -l [location] -n <newServiceName> -g <yourResourceGroupName> --sku-name BusinessCritical_4vCores --subnet/subscriptions/{vnet subscription id}/resourceGroups/{vnet resource group}/providers/Microsoft.Network/virtualNetworks/{vnet name}/subnets/{subnet name} –tags tagName1=tagValue1 tagWithNoValue
-```
-For example the following command will create a service in:
-
-* Location: East US2
-* Subscription: 97181df2-909d-420b-ab93-1bff15acb6b7
-* Resource Group Name: PostgresDemo
-* DMS Service Name: PostgresCLI
-```
-az dms create -l eastus2 -g PostgresDemo -n PostgresCLI --subnet /subscriptions/97181df2-909d-420b-ab93-1bff15acb6b7/resourceGroups/ERNetwork/providers/Microsoft.Network/virtualNetworks/AzureDMS-CORP-USC-VNET-5044/subnets/Subnet-1 --sku-name BusinessCritical_4vCores
-```
-It takes about 10-12 minutes to create the instance of the DMS service.
 
 3. To identify the IP address of the DMS agent so that you can add it to the Postgres pg_hba.conf file, run the following command:
 ```
@@ -144,22 +133,22 @@ You should get a result similar to the following address:
 host    all     all     172.16.136.18/10    md5
 host    replication     postgres    172.16.136.18/10    md5
 ```
-5. Next, create a PostgreSQL migration project by running the following command:
+5. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
 az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
 ```
 For example, the following command creates a project using these parameters:
 
-* Location: West Central US
-* Resource Group Name: PostgresDemo
-* Service Name: PostgresCLI
-* Project name: PGMigration
-* Source platform: PostgreSQL
-* Target platform: AzureDbForPostgreSql
+* Location: **West Central US**
+* Resource Group Name: **PostgresDemo**
+* Service Name: **PostgresCLI**
+* Project name: **PGMigration**
+* Source platform: **PostgreSQL**
+* Target platform: **AzureDbForPostgreSql**
 ```
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
-6. Create a PostgreSQL migration task using the following steps.
+6. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the source IP, UserID and password, destination IP, UserID, password, and task type to establish connectivity.
 
 * To see a full list of options, run the command:
@@ -172,8 +161,7 @@ For both source and target connection, the input parameter is referring to a jso
 ```
 {
             "userName": "user name",    // if this is missing or null, you will be prompted
-            "password": null,           // if this is missing or null (highly recommended) you will
-        be prompted
+            "password": null,           // if this is missing or null (highly recommended) you will be prompted
             "serverName": "server name",
             "databaseName": "database name", // if this is missing, it will default to the 'postgres'
         server
@@ -194,8 +182,7 @@ For both source and target connection, the input parameter is referring to a jso
 ```
 {
            "userName": "postgres",    
-           "password": null,           
-       be prompted
+           "password": null,  
            "serverName": "13.51.14.222",
            "databaseName": "dvdrental", 
            "port": 5432                
@@ -211,7 +198,7 @@ For both source and target connection, the input parameter is referring to a jso
 ```
 * Run the following command, which takes in the source, destination, and the DB option json files.
 ```
-az dms project task create -g PostgresDemo --project-name PGMigration --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json –task-type OnlineMigration -n runnowtask    
+az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json –task-type OnlineMigration -n runnowtask    
 ```
 At this point, you've successfully submitted a migration task.
 
@@ -226,7 +213,7 @@ az dms project task show --service-name PostgresCLI --project-name PGMigration -
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
-## Understanding migration task status
+## 1.3: Understanding migration task status
 In the output file, there are several parameters that indicate progress of migration. For example, see the output file below:
 ```
 "output": [                                 Database Level
@@ -304,7 +291,8 @@ In the output file, there are several parameters that indicate progress of migra
   "resourceGroup": "PostgresDemo",
   "type": "Microsoft.DataMigration/services/projects/tasks"
 ```
-## Cutover migration task
+
+## 1.4: Cutover migration task
 The database is ready for cutover when full load is complete. Depending on how busy the source server is with new transactions is coming in, the DMS task might be still applying changes after the full load is complete.
 
 To ensure all data is caught up, validate row counts between the source and target databases. For example, you can use the following command:
@@ -329,7 +317,7 @@ az dms project task cutover --service-name PostgresCLI --project-name PGMigratio
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-## Service, project, task cleanup
+## 1.5: Service, project, task cleanup
 If you need to cancel or delete any DMS task, project, or service, perform the cancellation in the following sequence:* 
 * Cancel any running task
 * Delete the task
