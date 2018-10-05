@@ -233,10 +233,10 @@ DATABASE_URL='postgres://pgsqluser@postgresql:P@ssword1@postgresql.database.wind
 ALLOWED_HOSTS = "*"
 ```
    >Note: If you look at the credentials closely, you will notice we are using the new Azure Database for PostgreSQL service to connect to this app, and we have pre-populated the connection string.
-15.	On the **VIM Editor Terminal**, to come out of the editing mode.
-A: Press the **ESC** key.
-B: Type **:wr** and hit **Enter**. This writes in the file **.env** and saves it.
-C: Type **:q** and hit **Enter** to leave VIM
+15.	On the **VIM Editor Terminal**, to come out of the editing mode.<br/>
+A: Press the **ESC** key.<br/>
+B: Type **:wr** and hit **Enter**. This writes in the file **.env** and saves it.<br/>
+C: Type **:q** and hit **Enter** to leave VIM.<br/>
 16.	Next, we need to allow the host to communicate outside of the environment. Change the directory to bootcamp/config/settings
 ```
 cd config/settings
@@ -248,10 +248,10 @@ vim local.py
 18.	Append the **ALLOWED_HOSTS** parameter.
 A: Type **i** to enter **INSERT** mode.
 B: Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and "*" with a **comma**.  
-19.	**Save** the changes to **local.py**.
-A: **Press** the **ESC** key.
-B: Type **:wr** and hit **Enter**.
-C: Type **:q** and hit **Enter** to leave **VIM**.
+19.	**Save** the changes to **local.py**.<br/>
+A: **Press** the **ESC** key.<br/>
+B: Type **:wr** and hit **Enter**.<br/>
+C: Type **:q** and hit **Enter** to leave **VIM**.<br/>
 20.	Change the directory back to bootcamp
 ```
 cd ~/bootcamp
