@@ -110,30 +110,7 @@ az dms -h
 ```
 az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
 ```
-
-3. To identify the IP address of the DMS agent so that you can add it to the Postgres pg_hba.conf file, run the following command:
-```
-az network nic list -g <ResourceGroupName>--query '[].ipConfigurations | [].privateIpAddress'
-```
-For example:
-```
-az network nic list -g PostgresDemo --query '[].ipConfigurations | [].privateIpAddress'
-```
-You should get a result similar to the following address:
-```
-[
-  "172.16.136.18"
-]
-```
-4. Add the IP address of the DMS agent to the Postgres pg_hba.conf file.
-
-* Take note of the DMS IP address after you finish provisioning in DMS.
-* Add the IP address to pg_hba.conf file on the source, similar to the following entry:
-```
-host    all     all     172.16.136.18/10    md5
-host    replication     postgres    172.16.136.18/10    md5
-```
-5. Next, create a **PostgreSQL** migration **project** by running the following command:
+3. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
 az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
 ```
@@ -148,7 +125,7 @@ For example, the following command creates a project using these parameters:
 ```
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
-6. Create a **PostgreSQL** migration task using the following steps.
+4. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the source IP, UserID and password, destination IP, UserID, password, and task type to establish connectivity.
 
 * To see a full list of options, run the command:
@@ -202,14 +179,14 @@ az dms project task create -g <resource group name> --project-name <project name
 ```
 At this point, you've successfully submitted a migration task.
 
-7. To show progress of the task, run the following command:
+5. To show progress of the task, run the following command:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
 ```
-8. You can also query for the migrationState from the expand output:
+6. You can also query for the migrationState from the expand output:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
