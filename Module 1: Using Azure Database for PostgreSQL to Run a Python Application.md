@@ -139,7 +139,7 @@ az vm create --resource-group <resource group name> --name myubuntu --vnet-name 
    
    >Note: To find the public IP address for the Ubuntu Server go to the Azure Portal and Select Virtual Machines from the resource Blade.
    
-3. Select **MyUbuntu** from the **Virtual Machine** List. Highlight **Overview** and view the **Public IP address** on the right side.
+3. Select **MyUbuntu** from the **Virtual Machine** List. Highlight **Overview** and view the **Public IP address** on the right side.<br/>
 <img src="images/vm.jpg"/><br/>
 4.	By default, only **SSH connections** are allowed into **Linux virtual machines** deployed in Azure. This VM is going to be a webserver, so you need to open a port from the Internet. Use the **az vm open-port** command to open the desired port.
 ```
@@ -178,10 +178,12 @@ git clone https://github.com/vitorfs/bootcamp.git
   >Note: Feel free to browse to Github and have a look at the Bootcamp repo to learn about what the application does: https://github.com/vitorfs/bootcamp.git 
   
 6.	In your shell, type the following and hit **Enter**:
-```cd bootcamp
+```
+cd bootcamp
 ```
 7.	Select release **1.0.4** of the Bootcamp application, In your shell, type the following and hit **Enter**:
-```git reset --hard c15452cef893b36fb9f82dda0239983333c3ecf4
+```
+git reset --hard c15452cef893b36fb9f82dda0239983333c3ecf4
 ```
 <img src="images/post13.jpg"/><br/>
 8.	**Run** the following command to install the extension tool.
