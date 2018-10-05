@@ -1,51 +1,33 @@
-# Module 1: Using Azure Database for PostgreSQL to Run a Python Application 
+# Module 1: Using Azure Database for PostgreSQL to Run a Python Application
+
 ## Overview
 Azure Database for PostgreSQL is a PostgreSQL database service built on Microsoft's scalable cloud infrastructure for application developers.
 Leverage your existing open-source PostgreSQL skills and tools and scale on-the-fly without downtime to efficiently deliver existing and new applications with reduced operational overhead.
 Built-in features maximize performance, availability, and security. Azure Database for PostgreSQL empowers developers to focus on application innovation instead of database management tasks.
 
+An Azure Resource Group is a logical container into which Azure resources are deployed and managed. A Resource Group and a Storage Account must exist before any virtual machines can be created. In this example, a resource group already created in the some region. You will need to use resource group name while creating your Database and Server.
+
+Throughout this lab, we will use the **Azure Command Line Interface** or **Azure CLI** using the **Cloud Shell** feature in the **Azure Portal**.
+
 ## Scenario Overview
 
 This hands-on lab will step you through the following:
-1.	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
-2.	Create an **Azure Database for PostgreSQL** instance.
-3.	Create an **Ubuntu Azure** VM.
-4.	Enable the firewall.
-5.	Create a database for an app written in Python and Django in Azure PostgreSQL database instance.
-6.	**Login** to ubuntu VM.
-7.	Download the app from **GitHub**: git clone https://github.com/vitorfs/bootcamp.git  - cd bootcamp
-8.	Change your connection string **vim .env**. Paste this in the .env file (change database credentials to yours)
-```
-DEBUG=True
-SECRET_KEY='mys3cr3tk3y'
-DATABASE_URL='postgres://pgsqluser@postgresql:P@ssword1@postgresql.database.windows.net:5432/bootcamp'
-ALLOWED_HOSTS = "*"
-```
-9.	**Run** migration and serve the app
 
-```
-Python manage.py migrate
-
-Python manage.py runserver 0.0.0.0:8000
-```
-
-12.	Open **browser** and go to **http://[externalIpAddress]:8000** to interact with the app.
-13.	Play around with the app, and demonstrate that it works.
+1.1	 Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+1.2	 Create an Azure Database for PostgreSQL instance.
+1.2.1  Create and connect to your PostgreSQL database using psql
+1.3	 Create an Ubuntu Azure VM.
+1.4	 Configure the Bootcamp Application 
 
 
-# Developing apps with Azure Database for PostgreSQL
+## 1.1	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
 
-An Azure Resource Group is a logical container into which Azure resources are deployed and managed. A Resource Group and a Storage Account must exist before any virtual machines can be created. In this example, a resource group already created in the some region. You will need to use resource group name while creating your Database and Server.
-
-Throughout this lab, we will use the **Azure Command Line Interface** or **Azure CLI using the Cloud Shell** feature in the Azure Portal.
-
-### Sign In to the Azure portal
-
-1.	In the Email, phone, or Skype box, type <inject key="AzureAdUserEmail" /> and click **Next**
-2.	In the Password box, type <inject key="AzureAdUserPassword" /> and click **Sign in**
-3.	In the Stay signed in? pop-up window, click No
+1.  **Navigate** to https://portal.azure.com and login (from the previous step).
+2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.  
+3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.
 4.	In the Welcome to **Microsoft Azure** pop-up window, click **Maybe Late**r. Initialize the **Azure CLI**.
-5.	To launch the **Azure Cloud Shell**, click the **Cloud Shell** button on the menu in the top menu bar of the Azure portal. The button launches an interactive shell that you can use to run all of the steps required to create and manage an Ubuntu Linux VM.
+5.	To launch the **Azure Cloud Shell**, click the **Cloud Shell** button on the menu in the top menu bar of the Azure portal. The button launches an interactive shell that you can use to run all of the steps required to create and manage an Ubuntu Linux VM.<br/>
+<img src="images/post1.jpg"/><br/>
 6.	Once the shell launches, you will see **Welcome to Azure Cloud Shell**. Click on the **Bash (Linux)** option at the bottom.<br/>
 <img src="images/post1.jpg"/><br/>
 7.	In the **You have no storage mounted** tab, click Show Advanced Settings.<br/>
@@ -53,13 +35,15 @@ Throughout this lab, we will use the **Azure Command Line Interface** or **Azure
 8.	In the **Advanced Settings** tab, use the existing **Resource Group** and enter a unique name for the **Storage Account** and **File Share**.<br/>
 <img src="images/post3.jpg"/><br/>
 9.	Click **Create Storage**.
-10. Once the storage gets created, your Cloud Shell will initialize and very shortly be ready to use<br/>.
+10. Once the storage gets created, your **Cloud Shell** will initialize and very shortly be ready to use.<br/>
 <img src="images/post4.jpg"/><br/>
 
    > Note: the Resource Group name, the Storage Account, and the File Share you created are displayed in the CLI while it initializes.
 You may enlarge the shell by dragging the border or clicking on the maximize button on ht etop right of the shell.
 
-11. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:
+## 1.2	Create an **Azure Database for PostgreSQL** instance
+
+1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:
 ```
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
@@ -78,12 +62,12 @@ az postgres server firewall-rule create --resource-group <resource group name>  
 az postgres server show --resource-group <resourcegroupname> --name pqsql
 ```
 6.	Hit **Enter**
-The result is output to the screen in JSON format as shown in the example below. Make a note of the administratorLogin and fullyQualifiedDomainName.
-     > Note: Your fullyQualifiedDomainName will be pqsql<inject story-id="story://Content-Private/content/dfd/SP-OSS/postgresql/ossexperience1/story_a_postgresql" key="resourceGroupName" copy="false" />.postgres.database.azure.com
+The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.
+     > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
  ```
  {
-  "administratorLogin": "pgsqluser",
-  "fullyQualifiedDomainName": "pqsql123456.postgres.database.azure.com",
+  "administratorLogin": "pgsqluser", //fullyQualifiedDomainName
+  "fullyQualifiedDomainName": "pqsql123456.postgres.database.azure.com", //fullyQualifiedDomainName
   "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.DBforPostgreSQL/servers/mypgserver-20170401",
   "location": "southcentralus",
   "name": "pqsqlrg123456",
@@ -103,7 +87,7 @@ The result is output to the screen in JSON format as shown in the example below.
   "version": "9.6"
   }
   ```
-### Create and connect to your PostgreSQL database using psql
+## 1.2.1 Create and connect to your PostgreSQL database using psql
 
 1.	Type the following psql command in **Azure Cloud Shell** and hit **Enter**:
 ```
@@ -126,7 +110,7 @@ create database bootcamp;
 \q
 ```
 
-### Create an Azure VM running Ubuntu Server
+## 1.3	 Create an Ubuntu Azure VM
 
 1.	Create a virtual machine with the **az vm create** command in cloud shell. When creating a virtual machine, several options are available such as operating system image, disk sizing, and administrative credentials. In this example, a virtual machine is created with a name of **myVM** running Ubuntu Server.
 ```
@@ -166,7 +150,7 @@ ssh [publicIpAddress]
 7.	Hit **Enter**
 8.	When prompted to continue, type yesand hit **Enter**
 
-### Configure the Bootcamp Application
+## 1.4 Configure the Bootcamp Application
 
 1.	Now you are at the shell of your new Ubuntu VM. Let's update the package index in Ubuntu, so that we have a recent list of the package repository
 2.	In your shell, type the following command and hit **Enter**:
@@ -299,7 +283,7 @@ psql --host=<servver name> --port=5432 --username=<server admin login name> --db
 SELECT * FROM feeds_feed;
 ```
 You should now see the username you registered in Bootcamp in this table.
-3 pull requests found in 2 sections
+
 
 ### Conclusion
 
