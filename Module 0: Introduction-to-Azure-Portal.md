@@ -1,0 +1,45 @@
+ ## Lab 01: Introduction to Azure Portal
+ - [Option 1: Using Preconfigured Environment](#option-1-using-preconfigured-environment)
+   * [Exercise 01: Sign Up for Pre-configured Environment](#exercise-01-sign-up-for-pre-configured-environment)
+   * [Exercise 02: Log into your Azure Portal and Verify access to the Subscription](#exercise-02-log-into-your-azure-portal-and-verify-access-to-the-subscription)
+ 
+ ### Lab Overview
+This lab will take you through Azure login and portal experience and the pre-requisite environment.
+If you do not have an Azure Subscription, or an environment where you can setup the pre-requisite for carrying out these labs, you should select [Option 1](#option-1-using-preconfigured-environment), else go to [Option 2](#option-2-using-own-subscription-and-configuring-the-environment)
+
+### Prerequisites
+-	Windows or a Mac machine with HTML5 supported browser such as Microsoft Edge, Internet Explorer, Chrome or Firefox
+-	Red Hat Customer Portal login credentials so that the Azure instances can be registered with Red Hat Subscription Manager properly, and you must have enough OpenShift Container Platform entitlements to cover the chosen configuration.
+
+
+### Option 1: Using Preconfigured Environment
+
+### Time Estimate
+
+10 minutes
+
+### Exercise 01: Sign Up for pre configured environment
+
+In this exercise, you will create a source environment.
+1.	**Navigate** to training portal https://experience-azure.azurewebsites.net and register by providing all required information and **clicking** on **SUBMIT button**.
+<img src="images/sign1.jpg"/><br/>
+
+2. Once registration is accepted, you will be automatically redirected to the lab activation page. Now, it is advised to save a copy of the URL on the browser, which has the activation id. **Click** on the **Launch Lab** button.
+<img src="images/sing2.jpg"/><br/>
+
+3. You will see the environment details soon below.
+<img src="images/sign3.jpg"/><br/>
+Please ensure to take the values assigned to your deployment.
+
+
+### Exercise 02: Log into your Azure Portal and Verify access to the Subscription
+
+In this exercise, you will log into the **Azure Portal** using your Azure credentials and you will verify the type of role you are assigned in this Subscription.
+1.  **Navigate** to https://portal.azure.com and login (from the previous step).
+2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
+<img src="images/username1.jpg"/><br/>
+3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.<br/>
+<img src="images/password1.jpg"/><br/>
+4.	In the Welcome to **Microsoft Azure** pop-up window, click **Maybe Late**r. Initialize the **Azure CLI**.
+<img src="images/username2.jpg"/><br/>
+
