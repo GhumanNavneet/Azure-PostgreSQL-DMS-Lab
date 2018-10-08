@@ -18,12 +18,11 @@ For an optimal migration experience, Microsoft recommends creating an instance o
 
 There are a number of applications you can use to connect to your Azure Database for PostgreSQL server. Let's first use the psql command-line utility to illustrate how to connect to the server. You can use a web browser and Azure Cloud Shell as described here without the need to install any additional software. If you have the psql utility installed locally on your own machine, you can connect from there as well.
 
-1.	In the top navigation pane, select the terminal symbol to open Cloud Shell.<br/>
+1.	In the top navigation pane, select the terminal symbol to open **Cloud Shell**.<br/>
 <img src="images/shell.jpg"/><br/>
-2.	Cloud Shell opens in your browser, where you can type Bash shell commands.<br/>
+2.	Cloud Shell opens in your browser, where you can type **Bash shell** commands.<br/>
 <img src="images/new2.jpg"/><br/>
-3.	At the Cloud Shell prompt, connect to a database in your Azure Database for PostgreSQL server by typing the psql command line.
-To connect to an Azure Database for PostgreSQL server with the psql utility, use the following format:
+3.	At the Cloud Shell prompt, connect to a database in your **Azure Database** for **PostgreSQL** server by typing the psql command line. To connect to an **Azure Database for PostgreSQL** server with the psql utility, use the following format:
 ```
 psql --host=<yourserver> --port=<port> --username=<server admin login> --dbname=<database name>
 ```
@@ -34,7 +33,7 @@ psql --host=mydemoserver.postgres.database.azure.com --port=5432 --username=myad
 <img src="images/new3.jpg"/><br/>
 4. After you run the psql command with your own parameter values, you're prompted to enter the server admin password. This password is the same one that you provided when you created the server.<br/>
 <img src="images/new4.jpg"/><br/>
-5. After you connect, the psql utility displays a postgres prompt where you type sql commands. In the initial connection output, a warning may appear because the psql in Cloud Shell might be a different version than the Azure Database for PostgreSQL server version.
+5. After you connect, the psql utility displays a postgres prompt where you type sql commands. In the initial connection output, a warning may appear because the psql in Cloud Shell might be a different version than the **Azure Database for PostgreSQL** server version.
 Example psql output:
 ```
 psql (9.5.7, server 9.6.2)
@@ -53,7 +52,7 @@ To resolve the error, make sure the server configuration matches the steps in th
 CREATE DATABASE dvdrental;
 ```
 The command might take a few minutes to finish.
-5.	At the prompt, execute the following command to switch connections to the newly created database mypgsqldb:
+5.	At the prompt, execute the following command to switch connections to the newly created database **dvdrental**:
 ```
 \c dvdrental
 ```
@@ -76,7 +75,7 @@ cd C:\Program Files\PostgreSQL\9.6\bin
 ```
 pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
 ```
-For example, to dump a schema file **dvdrental** database:
+**For example**, to dump a schema file **dvdrental** database:
 ```
 pg_dump -o -h localhost -U postgres -d dvdrental -s  > dvdrentalSchema.sql
 ```
@@ -127,47 +126,48 @@ from information_schema.triggers;
 8. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
 
 ## 1.2: Provisioning an instance of DMS using the CLI
-1. Install the dms sync extension:
+1. Install the **dms sync extension**:
 
-a. Sign in to **Azure** by running the following command:
+2. Sign in to **Azure** by running the following command:
 ```
 az login
 ```
-b. When prompted, open a web browser and enter a code to authenticate your device. Follow the instructions as listed.
-c. Add the **dms** extension:
+3. When prompted, open a web browser and enter a **code** to authenticate your device. Follow the **instructions** as listed.
 
-d. To list the available extensions, run the following command:
+4. Add the **dms** extension:
+
+5. To list the available extensions, **run** the following command:
 ```
 az extension list-available –otable
 ```
-e. To install the extension, run the following command:
+6. To install the extension, run the following command:
 ```
 az extension add –n dms-preview
 ```
-f. To verify you have dms extension installed correct, run the following command:
+7. To verify you have dms extension installed correct, run the following command:
 ```
 az extension list -otable
 ```      
-g. You should see the following output:
+8. You should see the following output:
 ```
 ExtensionType    Name
 ---------------  ------
 whl              dms
 ```
 <img src="images/new12.jpg"/><br/>
-h. At any time, view all commands supported in **DMS** by running:
+9. At any time, view all commands supported in **DMS** by running:
 ```
 az dms -h
 ```
-i. If you have multiple Azure subscriptions, run the following command to set the subscription that you want to use to provision an instance of the DMS service.
+10. If you have multiple Azure subscriptions, **run** the following command to set the subscription that you want to use to provision an instance of the **DMS** service.
 ```
 az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
 ```
-2. Next, create a **PostgreSQL** migration **project** by running the following command:
+11. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
 az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
 ```
-For example, the following command creates a project using these parameters:
+**For example**, the following command creates a project using these parameters:
 
 * Location: **West Central US**
 * Resource Group Name: **Give your cloud rg name here**
@@ -179,16 +179,16 @@ For example, the following command creates a project using these parameters:
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
 <img src="images/new13.jpg"/><br/>
-3. Create a **PostgreSQL** migration task using the following steps.
-This step includes using the source IP, UserID and password, destination IP, UserID, password, and task type to establish connectivity.
+11. Create a **PostgreSQL** migration task using the following steps.
+This step includes using the **source IP, UserID and password, destination IP, UserID, password,** and **task type** to establish connectivity.
 
-a. To see a full list of options, run the command:
+12. To see a full list of options, **run** the command:
 ```
 az dms project task create -h
 ```
-For both source and target connection, the input parameter is referring to a json file that has the object list.
+For both **source** and **target** connection, the input parameter is referring to a json file that has the object list.
 
-b. The format of the connection JSON object for PostgreSQL connections.
+13. The format of the connection **JSON** object for **PostgreSQL** connections.
 ```
 {
             "userName": "user name",    // if this is missing or null, you will be prompted
@@ -209,9 +209,9 @@ b. The format of the connection JSON object for PostgreSQL connections.
     ...n
 ]
 ```
-c. Inside the Virtual machine, go to **C:\DMS** folder and open all 3 files.<br/>
+14. Inside the Virtual machine, go to **C:\DMS** folder and open all 3 files.<br/>
 <img src="images/new4.jpg"/><br/>
-d. Edit **source.json** file and then save the file.
+15. Edit **source.json** file and then save the file.
 ```
 {
            "userName": "postgres",    
@@ -222,7 +222,7 @@ d. Edit **source.json** file and then save the file.
        }
  ```
  <img src="images/new14.jpg"/><br/>
-e. Edit **target.json** file and save it. Include the following commands: 
+16. Edit **target.json** file and save it. Include the following commands: 
 ```
 { 
 "userName": "Server Admin Server Name",
@@ -233,7 +233,7 @@ e. Edit **target.json** file and save it. Include the following commands:
 }
 ```
 <img src="images/new15.jpg"/><br/>
-f. Run the following command, which takes in the source, destination, and the DB option json files.
+17. **Run** the following command, which takes in the source, destination, and the DB option json files.
 
 * Resource Group Name: **Give your cloud rg name here**
 * Service Name: **Give your DMS Name**
@@ -245,7 +245,7 @@ az dms project task create -g <resource group name> --project-name <project name
 ```
 At this point, you've successfully submitted a migration task.<br/>
 <img src="images/new16.jpg"/><br/>
-4. To show progress of the task, run the following command:
+18. To show progress of the task, **run** the following command:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
@@ -253,7 +253,7 @@ az dms project task show --service-name PostgresCLI --project-name PGMigration -
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
 ```
-5. You can also query for the migrationState from the expand output:
+19. You can also query for the **migration State** from the expand output:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
@@ -349,15 +349,15 @@ To ensure all data is caught up, validate row counts between the source and targ
     "cdcUpdateCounter": 0,
      "fullLoadTotalRows": 112,  //full load for table 2
 ```     
-1. Perform the cutover database migration task by using the following command:
+1. **Perform** the cutover database migration task by using the following command:
 ```
 az dms project task cutover -h
 ```
-For example:
+**For example**:
 ```
 az dms project task cutover --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask  --database-name Inventory
 ```
-2. To monitor the cutover progress, run the following command:
+2. To monitor the **cutover** progress, run the following command:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
@@ -368,23 +368,23 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 * Delete the project
 * Delete DMS service
 
-3. To cancel a running task, use the following command:
+3. To **cancel** a **running task**, use the following command:
 ```
 az dms project task cancel --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-4. To delete a running task, use the following command:
+4. To **delete** a **running task**, use the following command:
 ```
 az dms project task delete --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-5. To cancel a running project, use the following command:
+5. To **cancel** a **running project**, use the following command:
 ```
 az dms project task cancel -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
 ```
-6. To delete a running project, use the following command:
+6. To **delete** a **running project**, use the following command:
 ```
 az dms project task delete -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
 ```
-7. To delete DMS service, use the following command:
+7. To **delete DMS** service, use the following command:
 ```
 az dms delete -g ProgresDemo -n PostgresCLI
 ```
