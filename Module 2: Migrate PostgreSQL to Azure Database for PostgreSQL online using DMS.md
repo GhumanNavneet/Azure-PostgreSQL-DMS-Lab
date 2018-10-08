@@ -4,6 +4,8 @@ You can use the Azure Database Migration Service to migrate the databases from a
 
 In this tutorial, you learn how to:
 
+* Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+* Create an **Azure Database for PostgreSQL** instance
 * Migrate the sample schema using pgdump utility.
 * Create an instance of the Azure Database Migration Service.
 * Create a migration project by using the Azure Database Migration Service.
@@ -14,7 +16,78 @@ Important
 
 For an optimal migration experience, Microsoft recommends creating an instance of the Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
 
-## 1.1: Connect to the PostgreSQL Database by using psql in Cloud Shell
+## 1.1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+
+1.  **Navigate** to https://portal.azure.com and login (from the provided credentials).
+2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
+<img src="images/username1.jpg"/><br/>
+3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.<br/>
+<img src="images/password1.jpg"/><br/>
+4.	In the Welcome to **Microsoft Azure** pop-up window, click **Maybe Late**r. Initialize the **Azure CLI**.
+5.	To launch the **Azure Cloud Shell**, click the **Cloud Shell** button on the menu in the top menu bar of the Azure portal. The button launches an interactive shell that you can use to run all of the steps required to create and manage an Ubuntu Linux VM.<br/>
+<img src="images/shell.jpg"/><br/>
+6.	Once the shell launches, you will see **Welcome to Azure Cloud Shell**. Click on the **Bash (Linux)** option at the bottom.<br/>
+<img src="images/post1.jpg"/><br/>
+7.	In the **You have no storage mounted** tab, click on **Show Advanced Settings**.<br/>
+<img src="images/post2.jpg"/><br/>
+8.	In the **Advanced Settings** tab, use the existing **Resource Group** and enter a unique name for the **Storage Account** and **File Share**.<br/>
+<img src="images/post3.jpg"/><br/>
+9.	Click **Create Storage**.
+10. Once the storage gets created, your **Cloud Shell** will initialize and very shortly be ready to use.<br/>
+<img src="images/post4.jpg"/><br/>
+
+   > Note: the Resource Group name, the Storage Account, and the File Share you created are displayed in the CLI while it initializes.
+You may enlarge the shell by dragging the border or clicking on the maximize button on ht etop right of the shell.
+
+## 1.2:	Create an **Azure Database for PostgreSQL** instance
+
+1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
+```
+az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
+```
+<br/><img src="images/post5.jpg"/><br/>
+     > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
+     
+2.	Hit **Enter**.
+The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.<br/><br/>
+     > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
+ ```
+ {
+  "administratorLogin": "pgsqluser", //fullyQualifiedDomainName
+  "fullyQualifiedDomainName": "pqsql123456.postgres.database.azure.com", //fullyQualifiedDomainName
+  "id": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myresourcegroup/providers/Microsoft.DBforPostgreSQL/servers/mypgserver-20170401",
+  "location": "southcentralus",
+  "name": "pqsqlrg123456",
+  "resourceGroup": "rg123456",
+  "sku": {
+    "capacity": 50,
+    "family": null,
+    "name": "PGSQLS2M50",
+    "size": null,
+    "tier": "Basic"
+  },
+  "sslEnforcement": null,
+  "storageMb": 51200,
+  "tags": null,
+  "type": "Microsoft.DBforPostgreSQL/servers",
+  "userVisibleState": "Ready",
+  "version": "9.6"
+  }
+  ```
+3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.<br/>
+```
+az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
+```
+<img src="images/post6.jpg"/><br/>
+4.	Hit **Enter**.<br/>
+5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
+```
+az postgres server show --resource-group <resourcegroupname> --name <server name>
+```
+<img src="images/posti7.jpg"/><br/>
+6.	Hit **Enter**.
+
+## 1.3: Connect to the PostgreSQL Database by using psql in Cloud Shell
 
 There are a number of applications you can use to connect to your Azure Database for PostgreSQL server. Let's first use the psql command-line utility to illustrate how to connect to the server. You can use a web browser and Azure Cloud Shell as described here without the need to install any additional software. If you have the psql utility installed locally on your own machine, you can connect from there as well.
 
@@ -60,7 +133,7 @@ The command might take a few minutes to finish.
 <img src="images/new5.jpg"/><br/>
 You connected to the Azure Database for PostgreSQL server via psql in Cloud Shell, and you created a blank user database. Continue to the next section to connect by using another common tool, pgAdmin.
 
-## 1.2: Migrate the sample schema
+## 1.4: Migrate the sample schema
 To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.<br/>
 
 1. Login to **dms-dev-vm** and download **Remote Desktop Connection** file.<br/>
@@ -125,7 +198,7 @@ from information_schema.triggers;
 ```
 8. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
 
-## 1.2: Provisioning an instance of DMS using the CLI
+## 1.5: Provisioning an instance of DMS using the CLI
 1. Install the **dms sync extension**:
 
 2. Sign in to **Azure** by running the following command:
@@ -257,7 +330,7 @@ az dms project task show --service-name PostgresCLI --project-name PGMigration -
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
-## 1.3: Understanding migration task status
+## 1.6: Understanding migration task status
 In the output file, there are several parameters that indicate progress of migration. For example, see the output file below:
 ```
 "output": [                                 Database Level
@@ -336,7 +409,7 @@ In the output file, there are several parameters that indicate progress of migra
   "type": "Microsoft.DataMigration/services/projects/tasks"
 ```
 
-## 1.4: Cutover migration task
+## 1.7: Cutover migration task
 The database is ready for cutover when full load is complete. Depending on how busy the source server is with new transactions is coming in, the DMS task might be still applying changes after the full load is complete.
 
 To ensure all data is caught up, validate row counts between the source and target databases. For example, you can use the following command:
@@ -361,7 +434,7 @@ az dms project task cutover --service-name PostgresCLI --project-name PGMigratio
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
-## 1.5: Service, project, task cleanup
+## 1.8: Service, project, task cleanup
 If you need to cancel or delete any DMS task, project, or service, perform the cancellation in the following sequence:* 
 * Cancel any running task
 * Delete the task
