@@ -47,6 +47,8 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 ```
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
+if you have a sign of exclamation in password etc, put the string in quotes to avoid bash conflict.
+
 <br/><img src="images/post51.jpg"/><br/>
 
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
