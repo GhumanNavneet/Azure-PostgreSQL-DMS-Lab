@@ -5,7 +5,6 @@
  
  ### Lab Overview
 This lab will take you through Azure login and portal experience and the pre-requisite environment.
-If you do not have an Azure Subscription, or an environment where you can setup the pre-requisite for carrying out these labs, you should select [Option 1](#option-1-using-preconfigured-environment)
 
 ### Prerequisites
 -	Windows or a Mac machine with HTML5 supported browser such as Microsoft Edge, Internet Explorer, Chrome or Firefox
