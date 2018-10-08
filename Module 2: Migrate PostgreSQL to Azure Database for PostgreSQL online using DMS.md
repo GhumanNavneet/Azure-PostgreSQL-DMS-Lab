@@ -46,6 +46,7 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
 <br/><img src="images/post5.jpg"/><br/>
+
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
 2.	Hit **Enter**.
