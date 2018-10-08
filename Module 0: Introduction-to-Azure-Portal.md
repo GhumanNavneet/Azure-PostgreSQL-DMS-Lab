@@ -25,7 +25,7 @@ In this exercise, you will create a source environment.
 <img src="images/sign2.jpg"/><br/>
 
 2. Once registration is accepted, you will be automatically redirected to the lab activation page. Now, it is advised to save a copy of the URL on the browser, which has the activation id. **Click** on the **Launch Lab** button.<br/>
-<img src="images/sing3.jpg"/><br/>
+<img src="images/sign3.jpg"/><br/>
 
 3. You will see the environment details soon below.<br/>
 <img src="images/sign1.jpg"/><br/>
@@ -42,4 +42,11 @@ In this exercise, you will log into the **Azure Portal** using your Azure creden
 <img src="images/password1.jpg"/><br/>
 4.	In the Welcome to **Microsoft Azure** pop-up window, click **Maybe Late**r. Initialize the **Azure CLI**.
 <img src="images/username2.jpg"/><br/>
+5. You will see two Resource Groups on which you have access. 
+6. Click on **ODL-dms-XXXXX-cloudrg** Resource Group which contains the pre-deployed Database Migration Server as shown below:
+<img src="images/rg1.jpg"/><br/>
+7. Click on **ODL-dms-XXXXX-onpremises** Resource Group which contains the pre-deployed on-premises infrastructure.
+<img src="images/rg2.jpg"/><br/>
+8. Click on **dms-dev-vm** virtual machine:
+<img src="images/vm12.jpg"/><br/>
 
