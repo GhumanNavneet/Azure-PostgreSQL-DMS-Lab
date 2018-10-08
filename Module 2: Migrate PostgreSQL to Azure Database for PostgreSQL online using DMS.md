@@ -121,16 +121,16 @@ If the firewall is not configured to allow the IP address of Cloud Shell, the fo
 "psql: FATAL: no pg_hba.conf entry for host "0.0.0.0", user "myadmin", database "postgres", SSL on FATAL: SSL connection is required. Specify SSL options and retry.
 To resolve the error, make sure the server configuration matches the steps in the "Configure a server-level firewall rule" section of this article.
 ```
-4.	Create a blank database called **dvdrental** at the prompt by typing the following command:
+6.	Create a blank database called **dvdrental** at the prompt by typing the following command:
 ```
 CREATE DATABASE dvdrental;
 ```
 The command might take a few minutes to finish.
-5.	At the prompt, execute the following command to switch connections to the newly created database **dvdrental**:
+7.	At the prompt, execute the following command to switch connections to the newly created database **dvdrental**:
 ```
 \c dvdrental
 ```
-6.	Type \q, and then select the Enter key to quit psql. You can close Cloud Shell after you're finished.<br/>
+8.	Type \q, and then select the Enter key to quit psql. You can close Cloud Shell after you're finished.<br/>
 <img src="images/new5.jpg"/><br/>
 You connected to the Azure Database for PostgreSQL server via psql in Cloud Shell, and you created a blank user database. Continue to the next section to connect by using another common tool, pgAdmin.
 
