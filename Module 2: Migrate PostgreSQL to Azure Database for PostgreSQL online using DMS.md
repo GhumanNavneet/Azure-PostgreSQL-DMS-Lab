@@ -200,7 +200,7 @@ from information_schema.triggers;
 8. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
 
 ## 1.5: Provisioning an instance of DMS using the CLI
-1. Install the **dms sync extension**:
+1. Open another Command Prompt window, run it also as administrator.  
 
 2. Sign in to **Azure** by running the following command:
 ```
