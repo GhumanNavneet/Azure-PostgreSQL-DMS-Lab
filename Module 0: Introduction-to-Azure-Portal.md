@@ -1,5 +1,5 @@
  ## Lab 01: Introduction to Azure Portal
- - [Option 1: Using Preconfigured Environment](#option-1-using-preconfigured-environment)
+
    * [Exercise 01: Sign Up for Pre-configured Environment](#exercise-01-sign-up-for-pre-configured-environment)
    * [Exercise 02: Log into your Azure Portal and Verify access to the Subscription](#exercise-02-log-into-your-azure-portal-and-verify-access-to-the-subscription)
  
