@@ -4,7 +4,7 @@ You can use the Azure Database Migration Service to migrate the databases from a
 
 In this tutorial, you learn how to:
 
-* Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+* Create an Azure storage account and initialize Azure Cloud Shell Azure CLI.
 * Create an **Azure Database for PostgreSQL** instance
 * Migrate the sample schema using pgdump utility.
 * Create an instance of the Azure Database Migration Service.
@@ -15,6 +15,7 @@ In this tutorial, you learn how to:
 **Important**
 
 For an optimal migration experience, Microsoft recommends creating an instance of the Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
+
 
 ## 1.1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
 
@@ -38,6 +39,7 @@ For an optimal migration experience, Microsoft recommends creating an instance o
 
    > Note: the Resource Group name, the Storage Account, and the File Share you created are displayed in the CLI while it initializes.
 You may enlarge the shell by dragging the border or clicking on the maximize button on ht etop right of the shell.
+
 
 ## 1.2:	Create an **Azure Database for PostgreSQL** instance
 
@@ -88,6 +90,7 @@ az postgres server show --resource-group <resourcegroupname> --name <server name
 <img src="images/posti7.jpg"/><br/>
 6.	Hit **Enter**.
 
+
 ## 1.3: Connect to the PostgreSQL Database by using psql in Cloud Shell
 
 There are a number of applications you can use to connect to your Azure Database for PostgreSQL server. Let's first use the psql command-line utility to illustrate how to connect to the server. You can use a web browser and Azure Cloud Shell as described here without the need to install any additional software. If you have the psql utility installed locally on your own machine, you can connect from there as well.
@@ -134,6 +137,7 @@ The command might take a few minutes to finish.
 <img src="images/new5.jpg"/><br/>
 You connected to the Azure Database for PostgreSQL server via psql in Cloud Shell, and you created a blank user database. Continue to the next section to connect by using another common tool, pgAdmin.
 
+
 ## 1.4: Migrate the sample schema
 To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.<br/>
 
@@ -165,39 +169,6 @@ psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrenta
 ```
 <img src="images/new11.jpg"/><br/>
 
-6. If you have **foreign keys** in your schema, the initial load and continuous sync of the migration will fail. Execute the following script in **PgAdmin** or in **psql** to extract the drop foreign key script and add foreign key script at the destination (Azure Database for PostgreSQL).
-```
-SELECT Queries.tablename ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('DROP CONSTRAINT ', Queries.foreignkey), ',')) as DropQuery ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('ADD CONSTRAINT ', Queries.foreignkey, ' FOREIGN KEY (', column_name, ')', 'REFERENCES ', foreign_table_name, '(', foreign_column_name, ')' ), ',')) as AddQuery
-    FROM
-    (SELECT
-    tc.table_schema, 
-    tc.constraint_name as foreignkey, 
-    tc.table_name as tableName, 
-    kcu.column_name, 
-    ccu.table_schema AS foreign_table_schema,
-    ccu.table_name AS foreign_table_name,
-    ccu.column_name AS foreign_column_name 
-FROM 
-    information_schema.table_constraints AS tc 
-    JOIN information_schema.key_column_usage AS kcu
-      ON tc.constraint_name = kcu.constraint_name
-      AND tc.table_schema = kcu.table_schema
-    JOIN information_schema.constraint_column_usage AS ccu
-      ON ccu.constraint_name = tc.constraint_name
-      AND ccu.table_schema = tc.table_schema
-WHERE constraint_type = 'FOREIGN KEY') Queries
-  GROUP BY Queries.tablename;
-  ```
-Run the drop foreign key (which is the second column) in the query result.
-
-7. Triggers in the data (insert or update triggers) will enforce data integrity in the target ahead of the replicated data from the source. It is recommended that you disable triggers in all the tables at the target during migration and then re-enable the triggers after migration is complete.
-
-To disable triggers in target database, use the following command:
-```
-select concat ('alter table ', event_object_table, ' disable trigger ', trigger_name)
-from information_schema.triggers;
-```
-8. If there are ENUM data type in any tables, it is recommended that you temporarily update it to a ‘character varying’ datatype in the target table. After data replication is done, revert the datatype to ENUM.
 
 ## 1.5: Provisioning an instance of DMS using the CLI
 1. Open another Command Prompt window, run it also as administrator.  
@@ -210,15 +181,15 @@ az login
 
 4. Add the **dms** extension:
 
-5. To list the available extensions, **run** the following command:
+5. To **list** the available extensions, **run** the following command:
 ```
 az extension list-available –otable
 ```
-6. To install the extension, run the following command:
+6. To **install** the extension, **run** the following command:
 ```
 az extension add –n dms-preview
 ```
-7. To verify you have dms extension installed correct, run the following command:
+7. To verify you have **dms extension** installed correct, **run** the following command:
 ```
 az extension list -otable
 ```      
@@ -283,7 +254,7 @@ For both **source** and **target** connection, the input parameter is referring 
     ...n
 ]
 ```
-14. Inside the Virtual machine, go to **C:\DMS** folder and open all 3 files.<br/>
+14. Inside the Virtual machine, go to **C:\DMS** folder and open all files.<br/>
 <img src="images/new4.jpg"/><br/>
 15. Edit **source.json** file and then save the file.
 ```
@@ -307,7 +278,7 @@ For both **source** and **target** connection, the input parameter is referring 
 }
 ```
 <img src="images/new15.jpg"/><br/>
-17. **Run** the following command, which takes in the source, destination, and the DB option json files.
+17. **Run** the following command, which takes in the **source**, **destination,** and the **DB** option json files.
 
 * Resource Group Name: **Give your cloud rg name here**
 * Service Name: **Give your DMS Name**
@@ -331,6 +302,7 @@ az dms project task show --service-name PostgresCLI --project-name PGMigration -
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
+
 ## 1.6: Understanding migration task status
 In the output file, there are several parameters that indicate progress of migration. For example, see the output file below:
 ```
@@ -410,6 +382,7 @@ In the output file, there are several parameters that indicate progress of migra
   "type": "Microsoft.DataMigration/services/projects/tasks"
 ```
 
+
 ## 1.7: Cutover migration task
 The database is ready for cutover when full load is complete. Depending on how busy the source server is with new transactions is coming in, the DMS task might be still applying changes after the full load is complete.
 
@@ -435,6 +408,8 @@ az dms project task cutover --service-name PostgresCLI --project-name PGMigratio
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
+
+
 ## 1.8: Service, project, task cleanup
 If you need to cancel or delete any DMS task, project, or service, perform the cancellation in the following sequence:* 
 * Cancel any running task
