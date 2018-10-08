@@ -12,7 +12,7 @@ In this tutorial, you learn how to:
 * Run the migration.
 * Monitor the migration.
 
-Important
+**Important**
 
 For an optimal migration experience, Microsoft recommends creating an instance of the Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
 
