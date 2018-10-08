@@ -253,7 +253,7 @@ vim local.py
 
 *  Type **i** to enter **INSERT** mode.
 
-*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and "*" with a **comma**.  
+*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and * with a **comma**.  
 
 19.	**Save** the changes to **local.py**.<br/>
 * **Press** the **ESC** key.<br/>
