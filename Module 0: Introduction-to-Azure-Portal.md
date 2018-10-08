@@ -17,7 +17,7 @@ This lab will take you through Azure login and portal experience and the pre-req
 
 10 minutes
 
-### Exercise 01: Sign Up for pre configured environment
+### Exercise 1: Sign Up for pre configured environment
 
 In this exercise, you will create a source environment.
 1.	**Navigate** to bitly link which was provided by instructor and register by providing all required information and **clicking** on **SUBMIT button**.<br/>
@@ -31,7 +31,7 @@ In this exercise, you will create a source environment.
 Please ensure to take the values assigned to your deployment.
 
 
-### Exercise 02: Log into your Azure Portal and Verify access to the Subscription
+### Exercise 2: Log into your Azure Portal and Verify access to the Subscription
 
 In this exercise, you will log into the **Azure Portal** using your Azure credentials and you will verify the type of role you are assigned in this Subscription.
 1.  **Navigate** to https://portal.azure.com and login (from the previous step).
