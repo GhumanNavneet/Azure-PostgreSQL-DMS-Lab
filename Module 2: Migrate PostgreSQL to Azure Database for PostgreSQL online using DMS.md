@@ -14,14 +14,65 @@ Important
 
 For an optimal migration experience, Microsoft recommends creating an instance of the Azure Database Migration Service in the same Azure region as the target database. Moving data across regions or geographies can slow down the migration process and introduce errors.
 
-## 1.1: Migrate the sample schema
-To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.
-1. Login to **dms-dev-vm** through **Remote Desktop Connection**
-2. Inside the virtual machine click on **Start** button search for **command prompt**, run it as **administrator** and change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
+## 1.1: Connect to the PostgreSQL Database by using psql in Cloud Shell
+
+There are a number of applications you can use to connect to your Azure Database for PostgreSQL server. Let's first use the psql command-line utility to illustrate how to connect to the server. You can use a web browser and Azure Cloud Shell as described here without the need to install any additional software. If you have the psql utility installed locally on your own machine, you can connect from there as well.
+
+1.	In the top navigation pane, select the terminal symbol to open Cloud Shell.<br/>
+<img src="images/shell.jpg"/><br/>
+2.	Cloud Shell opens in your browser, where you can type Bash shell commands.<br/>
+<img src="images/new2.jpg"/><br/>
+3.	At the Cloud Shell prompt, connect to a database in your Azure Database for PostgreSQL server by typing the psql command line.
+To connect to an Azure Database for PostgreSQL server with the psql utility, use the following format:
+```
+psql --host=<yourserver> --port=<port> --username=<server admin login> --dbname=<database name>
+```
+For example, the following command connects to an example server:
+```
+psql --host=mydemoserver.postgres.database.azure.com --port=5432 --username=myadmin@mydemoserver --dbname=postgres
+```
+<img src="images/new3.jpg"/><br/>
+4. After you run the psql command with your own parameter values, you're prompted to enter the server admin password. This password is the same one that you provided when you created the server.<br/>
+<img src="images/new4.jpg"/><br/>
+5. After you connect, the psql utility displays a postgres prompt where you type sql commands. In the initial connection output, a warning may appear because the psql in Cloud Shell might be a different version than the Azure Database for PostgreSQL server version.
+Example psql output:
+```
+psql (9.5.7, server 9.6.2)
+WARNING: psql major version 9.5, server major version 9.6.
+    Some psql features might not work.
+SSL connection (protocol: TLSv1.2, cipher: ECDHE-RSA-AES256-SHA384, bits: 256, compression: off)
+Type "help" for help.
+postgres=> 
+Tip
+If the firewall is not configured to allow the IP address of Cloud Shell, the following error occurs:
+"psql: FATAL: no pg_hba.conf entry for host "0.0.0.0", user "myadmin", database "postgres", SSL on FATAL: SSL connection is required. Specify SSL options and retry.
+To resolve the error, make sure the server configuration matches the steps in the "Configure a server-level firewall rule" section of this article.
+```
+4.	Create a blank database called **dvdrental** at the prompt by typing the following command:
+```
+CREATE DATABASE dvdrental;
+```
+The command might take a few minutes to finish.
+5.	At the prompt, execute the following command to switch connections to the newly created database mypgsqldb:
+```
+\c dvdrental
+```
+6.	Type \q, and then select the Enter key to quit psql. You can close Cloud Shell after you're finished.<br/>
+<img src="images/new5.jpg"/><br/>
+You connected to the Azure Database for PostgreSQL server via psql in Cloud Shell, and you created a blank user database. Continue to the next section to connect by using another common tool, pgAdmin.
+
+## 1.2: Migrate the sample schema
+To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.<br/>
+
+1. Login to **dms-dev-vm** and download **Remote Desktop Connection** file.<br/>
+<img src="images/new8.jpg"/><br/>
+2. Inside the virtual machine click on **Start** button search for **command prompt**, run it as **administrator**.</br> 
+<img src="images/new9.jpg"/><br/>
+3. Change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
 ```
 cd C:\Program Files\PostgreSQL\9.6\bin
 ```
-3. Use **pg_dump** command to create a **schema dump** file for a database.
+4. Use **pg_dump** command to create a **schema dump** file for a database.
 ```
 pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
 ```
@@ -29,8 +80,7 @@ For example, to dump a schema file **dvdrental** database:
 ```
 pg_dump -o -h localhost -U postgres -d dvdrental -s  > dvdrentalSchema.sql
 ```
-
-4. Create an empty database in your **target** environment, which is Azure Database for PostgreSQL.
+<img src="images/new10.jpg"/><br/>
 
 5. **Import** the schema into the target database you created by restoring the schema dump file.
 ```
@@ -40,6 +90,8 @@ psql -h hostname -U db_username -d db_name < your_schema.sql
 ```
 psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrental < dvdrentalSchema.sql
 ```
+<img src="images/new11.jpg"/><br/>
+
 6. If you have **foreign keys** in your schema, the initial load and continuous sync of the migration will fail. Execute the following script in **PgAdmin** or in **psql** to extract the drop foreign key script and add foreign key script at the destination (Azure Database for PostgreSQL).
 ```
 SELECT Queries.tablename ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('DROP CONSTRAINT ', Queries.foreignkey), ',')) as DropQuery ,concat('alter table ', Queries.tablename, ' ', STRING_AGG(concat('ADD CONSTRAINT ', Queries.foreignkey, ' FOREIGN KEY (', column_name, ')', 'REFERENCES ', foreign_table_name, '(', foreign_column_name, ')' ), ',')) as AddQuery
@@ -77,36 +129,37 @@ from information_schema.triggers;
 ## 1.2: Provisioning an instance of DMS using the CLI
 1. Install the dms sync extension:
 
-* Sign in to **Azure** by running the following command:
+a. Sign in to **Azure** by running the following command:
 ```
 az login
 ```
-* When prompted, open a web browser and enter a code to authenticate your device. Follow the instructions as listed.
-* Add the **dms** extension:
+b. When prompted, open a web browser and enter a code to authenticate your device. Follow the instructions as listed.
+c. Add the **dms** extension:
 
-** To list the available extensions, run the following command:
+d. To list the available extensions, run the following command:
 ```
 az extension list-available –otable
 ```
-** To install the extension, run the following command:
+e. To install the extension, run the following command:
 ```
 az extension add –n dms-preview
 ```
-** To verify you have dms extension installed correct, run the following command:
+f. To verify you have dms extension installed correct, run the following command:
 ```
 az extension list -otable
 ```      
-** You should see the following output:
+g. You should see the following output:
 ```
 ExtensionType    Name
 ---------------  ------
 whl              dms
 ```
-** At any time, view all commands supported in **DMS** by running:
+<img src="images/new12.jpg"/><br/>
+h. At any time, view all commands supported in **DMS** by running:
 ```
 az dms -h
 ```
-** If you have multiple Azure subscriptions, run the following command to set the subscription that you want to use to provision an instance of the DMS service.
+i. If you have multiple Azure subscriptions, run the following command to set the subscription that you want to use to provision an instance of the DMS service.
 ```
 az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
 ```
@@ -117,24 +170,25 @@ az dms project create -l <location> -g <ResourceGroupName> --service-name <yourS
 For example, the following command creates a project using these parameters:
 
 * Location: **West Central US**
-* Resource Group Name: **PostgresDemo**
-* Service Name: **PostgresCLI**
+* Resource Group Name: **Give your cloud rg name here**
+* Service Name: **Give your DMS Name**
 * Project name: **PGMigration**
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
 ```
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
+<img src="images/new13.jpg"/><br/>
 3. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the source IP, UserID and password, destination IP, UserID, password, and task type to establish connectivity.
 
-* To see a full list of options, run the command:
+a. To see a full list of options, run the command:
 ```
 az dms project task create -h
 ```
 For both source and target connection, the input parameter is referring to a json file that has the object list.
 
-* The format of the connection JSON object for PostgreSQL connections.
+b. The format of the connection JSON object for PostgreSQL connections.
 ```
 {
             "userName": "user name",    // if this is missing or null, you will be prompted
@@ -145,7 +199,7 @@ For both source and target connection, the input parameter is referring to a jso
             "port": 5432                // if this is missing, it will default to 5432
         }
 ```
-* There is also a database option json file that lists the json objects. For PostgreSQL, the format of the database options JSON object is shown below:
+  >There is also a database option json file that lists the json objects. For PostgreSQL, the format of the database options JSON object is shown below:
 ```
 [
     {
@@ -155,34 +209,47 @@ For both source and target connection, the input parameter is referring to a jso
     ...n
 ]
 ```
-* Create a json file with Notepad, copy the following commands and paste them into the file, and then save the file in C:\DMS\source.json.
+c. Inside the Virtual machine, go to **C:\DMS** folder and open all 3 files.<br/>
+<img src="images/new4.jpg"/><br/>
+d. Edit **source.json** file and then save the file.
 ```
 {
            "userName": "postgres",    
            "password": null,  
-           "serverName": "13.51.14.222",
+           "serverName": "Enter your Virtual machine DNS Name",
            "databaseName": "dvdrental", 
            "port": 5432                
        }
  ```
-* Create another file named target.json and save as C:\DMS\target.json. Include the following commands: 
+ <img src="images/new14.jpg"/><br/>
+e. Edit **target.json** file and save it. Include the following commands: 
 ```
-{ "userName": " dms@builddemotarget", "password": null, "serverName": " builddemotarget.postgres.database.azure.com", "databaseName": "inventory", "port": 5432 }
+{ 
+"userName": "Server Admin Server Name",
+"password": null, 
+"serverName": "Postgres Server Name", 
+"databaseName": "inventory",
+"port": 5432
+}
 ```
-* Create a database options json file that lists inventory as the database to migrate: 
-```
-[ { "name": "dvdrental", "target_database_name": "dvdrental", } ]
-```
-* Run the following command, which takes in the source, destination, and the DB option json files.
+<img src="images/new15.jpg"/><br/>
+f. Run the following command, which takes in the source, destination, and the DB option json files.
+
+* Resource Group Name: **Give your cloud rg name here**
+* Service Name: **Give your DMS Name**
+* Project name: **PGMigration**
+* Source platform: **PostgreSQL**
+* Target platform: **AzureDbForPostgreSql**
 ```
 az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json –task-type OnlineMigration -n runnowtask    
 ```
-At this point, you've successfully submitted a migration task.
-
+At this point, you've successfully submitted a migration task.<br/>
+<img src="images/new16.jpg"/><br/>
 4. To show progress of the task, run the following command:
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
 ```
+<img src="images/new17.jpg"/><br/>
 ```
 az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
 ```
