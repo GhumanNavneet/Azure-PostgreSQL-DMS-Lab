@@ -21,14 +21,14 @@ If you do not have an Azure Subscription, or an environment where you can setup 
 ### Exercise 01: Sign Up for pre configured environment
 
 In this exercise, you will create a source environment.
-1.	**Navigate** to training portal https://experience-azure.azurewebsites.net and register by providing all required information and **clicking** on **SUBMIT button**.
-<img src="images/sign1.jpg"/><br/>
+1.	**Navigate** to bitly link which was provided by instructor and register by providing all required information and **clicking** on **SUBMIT button**.
+<img src="images/sign2.jpg"/><br/>
 
 2. Once registration is accepted, you will be automatically redirected to the lab activation page. Now, it is advised to save a copy of the URL on the browser, which has the activation id. **Click** on the **Launch Lab** button.
-<img src="images/sing2.jpg"/><br/>
+<img src="images/sing3.jpg"/><br/>
 
 3. You will see the environment details soon below.
-<img src="images/sign3.jpg"/><br/>
+<img src="images/sign1.jpg"/><br/>
 Please ensure to take the values assigned to your deployment.
 
 
