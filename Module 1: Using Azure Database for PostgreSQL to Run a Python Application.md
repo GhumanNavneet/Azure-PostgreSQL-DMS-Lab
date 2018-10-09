@@ -116,19 +116,19 @@ psql --host=<server name> --port=5432 --username=<server admin login name> --dbn
 ```
 <img src="images/post7.jpg"/><br/>
 
-2.	You will be prompted for a password. Type your **Password** at the prompt and hit **Enter**.<br/>
+3.	You will be prompted for a password. Type your **Password** at the prompt and hit **Enter**.<br/>
     
     >Important Note: the psql prompt will not echo what you type. Use care to type or paste the password into the CLI window exactly. If you see the error "FATAL: SSL connection is required." your password may not have been accepted and you should repeat the psql command above and re-enter the password carefully.
     
-3.	Once you are connected to the server with psql, create a blank database for your Python app to use. At the prompt, type the following command and hit **Enter**:
+4.	Once you are connected to the server with psql, create a blank database for your Python app to use. At the prompt, type the following command and hit **Enter**:
 ```
 create database bootcamp;
 ```
-4.	The Bootcamp database is now created. To connect to it and confirm it was created, type the following command and hit **Enter**:
+5.	The Bootcamp database is now created. To connect to it and confirm it was created, type the following command and hit **Enter**:
 ```
 \c bootcamp;
 ```
-5.	Exit psql and return to the Azure Cloud Shell prompt. Type the following command and hit **Enter**:
+6.	Exit psql and return to the Azure Cloud Shell prompt. Type the following command and hit **Enter**:
 ```
 \q
 ```
