@@ -46,13 +46,13 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 ## 1.2:	Create an **Azure Database for PostgreSQL** instance
 
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Edit the following command as per below:<br/>
-* --resource-group : Give your **onpremisesrg** Resourse Group name
-* --name : Give any unique name for your **Postgresql server**
-* --location: **southcentralus**
-* --admin-user: **cloudlabs**
-* --admin-password: any posaaword for your server
-* --sku-name: **GP_Gen4_2** 
-* --storage-size: **51200**
+* **--resource-group :** Give your **onpremisesrg** Resourse Group name
+* **--name :** Give any unique name for your **Postgresql server**
+* **--location :** **southcentralus**
+* **--admin-user :** **cloudlabs**
+* **--admin-password :** Give **Password** for your server
+* **--sku-name :** **GP_Gen4_2** 
+* **--storage-size :** **51200**
 Then copy and paste in **Azure Cloud Shell** command line.
 ```
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
@@ -90,16 +90,16 @@ The result is output to the screen in JSON format as shown in the example below.
   }
   ```
 3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**. Edit the command as shown below:<br/>
-* --resource-group : Give your **onpremisesrg** Resourse Group name
-* --server : Give name of your **Postgresql server**
+* **--resource-group :** Give your **onpremisesrg** Resourse Group name
+* **--server :** Give name of your **Postgresql server**
 ```
 az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
 ```
 <img src="images/post6.jpg"/><br/>
 4.	Hit **Enter**.<br/>
 5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
-* --resource-group : Give your **onpremisesrg** Resourse Group name
-* --server : Give name of your **Postgresql server**
+* **--resource-group :** Give your **onpremisesrg** Resourse Group name
+* **--server :** Give name of your **Postgresql server**
 ```
 az postgres server show --resource-group <resourcegroupname> --name <server name>
 ```
@@ -137,10 +137,10 @@ create database bootcamp;
 ## 1.4:	 Create an Ubuntu Azure VM
 
 1.	Create a virtual machine with the **az vm create** command in cloud shell. When creating a virtual machine, several options are available such as operating system image, disk sizing, and administrative credentials. In this example, a virtual machine is created with a name of **myubuntu** running Ubuntu Server. Edit the command and copy paste in **Azure Cloudshell**
-* --resource-group: Give your **onpremisesrg** resource group name
-* --name: **myubuntu**
-* --vnet-name: **myvnet** 
-* --image: **ubuntults**
+* **--resource-group :** Give your **onpremisesrg** resource group name
+* **--name :** **myubuntu**
+* **--vnet-name :** **myvnet** 
+* **--image :** **ubuntults**
 
 ```
 az vm create --resource-group <resource group name> --name myubuntu --vnet-name myvnet --image ubuntults --generate-ssh-keys
@@ -182,11 +182,11 @@ ssh [publicIpAddress]
 <img src="images/post11.jpg"/><br/>
    >Note: Replace [publicIpAddress] with the IP address of your server (without brackets) noted in the previous step (2).
 7.	Hit **Enter**.
-8.	When prompted to continue, type yesand hit **Enter**.
+8.	When prompted to continue, type **yes** and hit **Enter**.
 
 ## 1.5: Configure the Bootcamp Application
 
-1.	Now you are at the shell of your new Ubuntu VM. Let's update the package index in Ubuntu, so that we have a recent list of the package repository
+1.	Now you are at the shell of your new **Ubuntu VM**. Let's update the package index in Ubuntu, so that we have a recent list of the package repository
 2.	In your shell, type the following command and hit **Enter**:
 ```
 sudo apt update
@@ -301,11 +301,13 @@ http://[publicIpAddress]:8000/
 ```
   >Important Note: Replace [publicIpAddress] with the IP address of your server (without brackets) from Create an Azure VM running Ubuntu Server-Step 3.
   
+ <img src="images/boot.jpg"/><br/>
+  
 24.	With the bootcamp app open in your browser, sign up for the bootcamp.
 
   >Note: Enter a username; provide an email address; create a password; then create your account
   >Note: The next screen you would see after successful creation of the account is this:
-
+<img src="images/boot1.jpg"/><br/>
 25.	Let's go to the database and query it directly. Return to Azure Cloud Shell where you have the SSH session and hit Ctrl-C to terminate the web server.
 
 26.	Next, let's terminate our SSH session to **Ubuntu**. Type the following command and hit **Enter**:
