@@ -22,7 +22,7 @@ This hands-on lab will step you through the following:
 
 ## 1.1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
 
-1.  **Navigate** to https://portal.azure.com and login (from the previous step).
+1.  **Navigate** to https://portal.azure.com and login (from provided credentials).
 2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
 <img src="images/username1.jpg"/><br/>
 3.	In the Stay signed in? pop-up window, click **No**. **Enter** the **Password** and click on **Sign in**.<br/>
@@ -45,16 +45,27 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 
 ## 1.2:	Create an **Azure Database for PostgreSQL** instance
 
-1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
+1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Edit the following command as per below:<br/>
+* --resource-group : Give your **onpremisesrg** Resourse Group name
+* --name : Give any unique name for your **Postgresql server**
+* --location: **southcentralus**
+* --admin-user: **cloudlabs**
+* --admin-password: any posaaword for your server
+* --sku-name: **GP_Gen4_2** 
+* --storage-size: **51200**
+Then copy and paste in **Azure Cloud Shell** command line.
 ```
 az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
 <br/><img src="images/post51.jpg"/><br/>
+
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
 2.	Hit **Enter**.
 The result is output to the screen in JSON format as shown in the example below. Make a note of the **administratorLogin** and **fullyQualifiedDomainName**.<br/><br/>
+
      > Note: Your fullyQualifiedDomainName will be servername.postgres.database.azure.com
+     
  ```
  {
   "administratorLogin": "pgsqluser", //fullyQualifiedDomainName
@@ -78,13 +89,17 @@ The result is output to the screen in JSON format as shown in the example below.
   "version": "9.6"
   }
   ```
-3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**.<br/>
+3.	Create an **Azure PostgreSQL server-level firewall** rule with the **az postgres server firewall-rule create** command. A server-level firewall rule allows an external application, such as psql or PgAdmin to connect to your server through the **Azure PostgreSQL service firewall**. Edit the command as shown below:<br/>
+* --resource-group : Give your **onpremisesrg** Resourse Group name
+* --server : Give name of your **Postgresql server**
 ```
 az postgres server firewall-rule create --resource-group <resource group name>  --server <server name> --name AllowAllIps --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
 ```
 <img src="images/post6.jpg"/><br/>
 4.	Hit **Enter**.<br/>
 5.	Now let's get the connection information for your new **PostGreSQL Azure Database Server**. To connect to your server, you need to provide host information and access credentials.
+* --resource-group : Give your **onpremisesrg** Resourse Group name
+* --server : Give name of your **Postgresql server**
 ```
 az postgres server show --resource-group <resourcegroupname> --name <server name>
 ```
@@ -93,13 +108,15 @@ az postgres server show --resource-group <resourcegroupname> --name <server name
 
 ## 1.3:  Create and connect to your PostgreSQL database using psql
 
-1.	Type the following psql command in **Azure Cloud Shell** and hit **Enter**:
+1. Go to **ODL-XXXXX-opremisesrg** Resource Group, click on **Postgresql Server** from overview section copy the **Server name** and **Server admin login name** and make note for this.<br/>
+<img src="images/postsql.jpg"/><br/>
+2. Edit the following psql command and copy paste it in **Azure Cloud Shell** and hit **Enter**:
 ```
 psql --host=<server name> --port=5432 --username=<server admin login name> --dbname=postgres
 ```
 <img src="images/post7.jpg"/><br/>
 
-2.	You will be prompted for a password. Type **P@ssword1** at the prompt and hit **Enter**.<br/>
+2.	You will be prompted for a password. Type your **Password** at the prompt and hit **Enter**.<br/>
     
     >Important Note: the psql prompt will not echo what you type. Use care to type or paste the password into the CLI window exactly. If you see the error "FATAL: SSL connection is required." your password may not have been accepted and you should repeat the psql command above and re-enter the password carefully.
     
@@ -119,13 +136,20 @@ create database bootcamp;
 
 ## 1.4:	 Create an Ubuntu Azure VM
 
-1.	Create a virtual machine with the **az vm create** command in cloud shell. When creating a virtual machine, several options are available such as operating system image, disk sizing, and administrative credentials. In this example, a virtual machine is created with a name of **myVM** running Ubuntu Server.
+1.	Create a virtual machine with the **az vm create** command in cloud shell. When creating a virtual machine, several options are available such as operating system image, disk sizing, and administrative credentials. In this example, a virtual machine is created with a name of **myubuntu** running Ubuntu Server. Edit the command and copy paste in **Azure Cloudshell**
+* --resource-group: Give your **onpremisesrg** resource group name
+* --name: **myubuntu**
+* --vnet-name: **myvnet** 
+* --image: **ubuntults**
+
 ```
 az vm create --resource-group <resource group name> --name myubuntu --vnet-name myvnet --image ubuntults --generate-ssh-keys
 ```
 <img src="images/post9.jpg"/><br/>
 2.	Hit **Enter**.
+
   >Note: Once the VM has been created, the Azure CLI outputs information about the VM. Take note of the publicIpAddress, this address can be used to access the virtual machine..
+  
 ```
 {    
  "fqdns": "",
@@ -147,7 +171,7 @@ az vm create --resource-group <resource group name> --name myubuntu --vnet-name 
 <img src="images/vm.jpg"/><br/>
 4.	By default, only **SSH connections** are allowed into **Linux virtual machines** deployed in Azure. This VM is going to be a webserver, so you need to open a port from the Internet. Use the **az vm open-port** command to open the desired port.
 ```
-az vm open-port --port 8000 --resource-group <resource group name> --name <virtual machine name>
+az vm open-port --port 8000 --resource-group <onpremisesrg resource group name> --name <virtual machine name>
 ```
 <img src="images/post10.jpg"/><br/>
 5.	Hit **Enter**.<br/>
