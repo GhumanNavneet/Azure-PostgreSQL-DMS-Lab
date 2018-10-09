@@ -307,7 +307,7 @@ http://[publicIpAddress]:8000/
 
   >Note: Enter a username; provide an email address; create a password; then create your account
   >Note: The next screen you would see after successful creation of the account is this:
-<img src="images/boot1.jpg"/><br/>
+<img src="images/boot11.jpg"/><br/>
 25.	Let's go to the database and query it directly. Return to Azure Cloud Shell where you have the SSH session and hit Ctrl-C to terminate the web server.
 
 26.	Next, let's terminate our SSH session to **Ubuntu**. Type the following command and hit **Enter**:
@@ -318,6 +318,8 @@ exit
 ```
 psql --host=<servver name> --port=5432 --username=<server admin login name> --dbname=bootcamp 
 ```
+<img src="images/boot12.jpg"/><br/>
+
 28.	If prompted for a password, type P@ssword1 at the prompt and hit **Enter**.
 
   >Note: the psql shell will not echo what you type.
@@ -326,7 +328,7 @@ psql --host=<servver name> --port=5432 --username=<server admin login name> --db
 SELECT * FROM feeds_feed;
 ```
 You should now see the username you registered in Bootcamp in this table.
-
+<img src="images/boot13.jpg"/><br/>
 
 ### Conclusion
 
