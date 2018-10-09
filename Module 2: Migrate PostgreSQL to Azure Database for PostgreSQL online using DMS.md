@@ -172,6 +172,10 @@ psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrenta
 ```
 <img src="images/new11.jpg"/><br/>
 
+```
+Please note that you will get few access denied errors when importing schema. You can ignore them and proceed
+```
+
 
 ## Exercise 5: Provisioning an instance of DMS using the CLI
 1. Open another Command Prompt window, run it also as administrator.  
@@ -197,11 +201,8 @@ whl              dms
 ```
 az dms -h
 ```
-7. If you have multiple Azure subscriptions, **run** the following command to set the subscription that you want to use to provision an instance of the **DMS** service.
-```
-az account set -s <subscriptionID>
-```
-8. Next, create a **PostgreSQL** migration **project** by running the following command:
+
+7. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
 az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
 ```
@@ -209,7 +210,7 @@ az dms project create -l <location> -g <ResourceGroupName> --service-name <yourS
 
 * Location: **Give yur DMS Location**
 * Resource Group Name: **Give your cloud rg name here**
-* Service Name: **Give your DMS Name**
+* Service Name: **Give your DMS ServiceName**
 * Project name: **PGMigration**
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
@@ -218,16 +219,16 @@ az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name P
 ```
 <img src="images/new13.jpg"/><br/>
 
-9. Create a **PostgreSQL** migration task using the following steps.
+8. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the **source IP, UserID and password, destination IP, UserID, password,** and **task type** to establish connectivity.
 
-10. To see a full list of options, **run** the command:
+9. To see a full list of options, **run** the command:
 ```
 az dms project task create -h
 ```
 For both **source** and **target** connection, the input parameter is referring to a json file that has the object list.
 
-11. The format of the connection **JSON** object for **PostgreSQL** connections.
+10. The format of the connection **JSON** object for **PostgreSQL** connections.
 ```
 {
             "userName": "user name",    // if this is missing or null, you will be prompted
