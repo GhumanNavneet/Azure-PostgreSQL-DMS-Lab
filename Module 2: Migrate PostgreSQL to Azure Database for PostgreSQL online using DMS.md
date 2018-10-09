@@ -112,7 +112,7 @@ For example, the following command connects to an example server:
 psql --host=mydemoserver.postgres.database.azure.com --port=5432 --username=myadmin@mydemoserver --dbname=postgres
 ```
 <img src="images/new3.jpg"/><br/>
-4. After you run the psql command with your own parameter values, you're prompted to enter the server admin password. This password is the same one that you provided when you created the server.
+4. After you run the psql command with your own parameter values, you're prompted to enter the server admin password. This password is the same one that you provided when you created the server.<br/>
 5. After you connect, the psql utility displays a postgres prompt where you type sql commands. In the initial connection output, a warning may appear because the psql in Cloud Shell might be a different version than the **Azure Database for PostgreSQL** server version.
 Example psql output:
 ```
