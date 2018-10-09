@@ -217,6 +217,7 @@ az dms project create -l <location> -g <ResourceGroupName> --service-name <yourS
 az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
 <img src="images/new13.jpg"/><br/>
+
 9. Create a **PostgreSQL** migration task using the following steps.
 This step includes using the **source IP, UserID and password, destination IP, UserID, password,** and **task type** to establish connectivity.
 
