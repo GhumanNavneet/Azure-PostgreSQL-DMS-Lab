@@ -110,7 +110,7 @@ az postgres server show --resource-group <resourcegroupname> --name <server name
 
 1. Go to **ODL-XXXXX-opremisesrg** Resource Group, click on **Postgresql Server** from overview section copy the **Server name** and **Server admin login name** and make note for this.<br/>
 <img src="images/postsql.jpg"/><br/>
-2. Edit the following psql command and copy paste it in **Azure Cloud Shell** and hit **Enter**:
+2. Edit the following psql command with **Server name** and **Server admin login name** and copy paste in **Azure Cloud Shell** and hit **Enter**:
 ```
 psql --host=<server name> --port=5432 --username=<server admin login name> --dbname=postgres
 ```
