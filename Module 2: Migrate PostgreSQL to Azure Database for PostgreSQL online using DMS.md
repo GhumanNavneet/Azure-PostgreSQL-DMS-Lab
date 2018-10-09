@@ -4,11 +4,11 @@ You can use the Azure Database Migration Service to migrate the databases from a
 
 In this tutorial, you learn how to:
 
-**Exercise 1:  Create an Azure storage account and initialize Azure Cloud Shell Azure CLI**<br/><br/>
-**Exercise 2:  Create an Azure Database for PostgreSQL instance**<br/><br/>
+**Exercise 1:  Create an Azure storage account and initialize Azure Cloud Shell Azure CLI**<br/>
+**Exercise 2:  Create an Azure Database for PostgreSQL instance**<br/>
 **Exercise 3:  Connect to the PostgreSQL Database by using psql in Cloud Shell**<br/>
 **Exercise 4:  Migrate the sample schema using pgdump utility**<br/>
-**Exercise 5:  Create an instance of the Azure Database Migration Service**<br/><br/>
+**Exercise 5:  Create an instance of the Azure Database Migration Service**<br/>
 **Exercise 6:  Create a migration project by using the Azure Database Migration Service**<br/>
 **Exercise 7:  Run the migration**<br/>
 **Exercise 8:  Monitor the migration**<br/>
