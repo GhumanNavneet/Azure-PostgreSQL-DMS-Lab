@@ -199,7 +199,7 @@ az dms -h
 ```
 7. If you have multiple Azure subscriptions, **run** the following command to set the subscription that you want to use to provision an instance of the **DMS** service.
 ```
-az account set -s 97181df2-909d-420b-ab93-1bff15acb6b7
+az account set -s <subscriptionID>
 ```
 8. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
@@ -207,7 +207,7 @@ az dms project create -l <location> -g <ResourceGroupName> --service-name <yourS
 ```
 **For example**, the following command creates a project using these parameters:
 
-* Location: **West Central US**
+* Location: **Give yur DMS Location**
 * Resource Group Name: **Give your cloud rg name here**
 * Service Name: **Give your DMS Name**
 * Project name: **PGMigration**
@@ -279,7 +279,7 @@ For both **source** and **target** connection, the input parameter is referring 
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
 ```
-az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json –task-type OnlineMigration -n runnowtask    
+az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json -–task-type OnlineMigration -n runnowtask    
 ```
 At this point, you've successfully submitted a migration task.<br/>
 <img src="images/new16.jpg"/><br/>
@@ -395,11 +395,11 @@ az dms project task cutover -h
 ```
 **For example**:
 ```
-az dms project task cutover --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask  --database-name Inventory
+az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>  --database-name Inventory
 ```
 2. To monitor the **cutover** progress, run the following command:
 ```
-az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
+az dms project task show --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
 ```
 
 
@@ -412,21 +412,21 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 
 3. To **cancel** a **running task**, use the following command:
 ```
-az dms project task cancel --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
+az dms project task cancel ---service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
 ```
 4. To **delete** a **running task**, use the following command:
 ```
-az dms project task delete --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
+az dms project task delete --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
 ```
 5. To **cancel** a **running project**, use the following command:
 ```
-az dms project task cancel -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
+az dms project task cancel -n <task name> --project-name <project name> --resource-group <cloudrg name> --service-name <dms name>
 ```
 6. To **delete** a **running project**, use the following command:
 ```
-az dms project task delete -n runnowtask --project-name PGMigration -g PostgresDemo --service-name PostgresCLI
+az dms project task delete -n <task name> --project-name <project name> --resource-group <cloudrg name> --service-name <dms name>
 ```
 7. To **delete DMS** service, use the following command:
 ```
-az dms delete -g ProgresDemo -n PostgresCLI
+az dms delete -g --resource-group <cloudrg name> --service-name <dms name>
 ```
