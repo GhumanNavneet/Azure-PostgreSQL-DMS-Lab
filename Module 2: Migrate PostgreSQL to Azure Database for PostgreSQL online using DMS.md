@@ -293,6 +293,7 @@ At this point, you've successfully submitted a migration task.<br/>
 az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
 <img src="images/new17.jpg"/><br/>
+17. You can also query for the migration State from the expand output:
 ```
 az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group> --name <task name> --expand output
 ```
