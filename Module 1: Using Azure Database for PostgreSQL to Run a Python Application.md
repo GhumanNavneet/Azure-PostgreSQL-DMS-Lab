@@ -175,12 +175,12 @@ az vm open-port --port 8000 --resource-group <onpremisesrg resource group name> 
 ```
 <img src="images/post10.jpg"/><br/>
 5.	Hit **Enter**.<br/>
-6.	Connect to the VM using SSH in the Azure CLI. Replace [publicIpAddress] with the IP address of your "myubuntu" virtual machine.
+6.	Connect to the VM using **SSH** in the Azure CLI. Replace **[publicIpAddress]** with the IP address of your **myubuntu** virtual machine.
 ```
 ssh [publicIpAddress]
 ```
 <img src="images/post11.jpg"/><br/>
-7.	Hit **Enter**.
+7.	Hit **Enter**.<br/>
 8.	When prompted to continue, type **yes** and hit **Enter**.
 
 ## 1.5: Configure the Bootcamp Application
