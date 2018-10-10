@@ -148,11 +148,7 @@ To complete all the database objects like table schemas, indexes and stored proc
 <img src="images/new8.jpg"/><br/>
 2. Inside the virtual machine click on **Start** button search for **command prompt**, run it as **administrator**.</br> 
 <img src="images/new9.jpg"/><br/>
-3. Change the directory to **C:\Program Files\PostgreSQL\9.6\bin** using following command:
-```
-cd C:\Program Files\PostgreSQL\9.6\bin
-```
-4. Use **pg_dump** command to create a **schema dump** file for a database.
+3. Use **pg_dump** command to create a **schema dump** file for a database.
 ```
 pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
 ```
@@ -162,7 +158,7 @@ pg_dump -o -h localhost -U postgres --no-owner --no-acl -d dvdrental -s  > C:\DM
 ```
 <img src="images/new101.jpg"/><br/>
 
-5. **Import** the schema into the target database you created by restoring the schema dump file.
+4. **Import** the schema into the target database you created by restoring the schema dump file.
 ```
 psql -h hostname -U db_username -d db_name < your_schema.sql 
 ```
