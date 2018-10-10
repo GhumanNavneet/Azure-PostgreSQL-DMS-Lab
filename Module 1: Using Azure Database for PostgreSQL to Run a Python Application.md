@@ -252,7 +252,7 @@ SECRET_KEY='mys3cr3tk3y'
 DATABASE_URL='postgres://<server admin login name>:<Password>@<server name>:5432/bootcamp'
 ALLOWED_HOSTS = "*"
 ```
-For Example:
+**For Example:**
 ```
 DEBUG=True
 SECRET_KEY='mys3cr3tk3y'
