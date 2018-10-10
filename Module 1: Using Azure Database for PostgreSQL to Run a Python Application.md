@@ -50,14 +50,14 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 * **--name :** Give any unique name for your **Postgresql server**
 * **--location : Give your **Resource Group** location
 * **--admin-user :** **cloudlabs**
-* **--admin-password :** Give **Password** for your server(Password!1234)
+* **--admin-password :** Replace <password> with 'Password!1234'
 * **--sku-name :** **GP_Gen4_2** 
 * **--storage-size :** **51200**
 Then copy and paste in **Azure Cloud Shell** command line.
 ```
-az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
+az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password '<password>' --sku-name GP_Gen4_2 --storage-size 51200
 ```
-<br/><img src="images/post51.jpg"/><br/>
+<br/><img src="images/new112.jpg"/><br/>
 
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
