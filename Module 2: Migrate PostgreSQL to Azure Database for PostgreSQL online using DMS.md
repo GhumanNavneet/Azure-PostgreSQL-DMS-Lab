@@ -215,7 +215,7 @@ az dms project create -l <location> -g <ResourceGroupName> --service-name <yourS
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
 ```
-az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name PostgresCLI --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
+az dms project create -l eastus2 -n PGMigration -g PostgresDemo --service-name <Service Name> --source-platform PostgreSQL --target-platform AzureDbForPostgreSql
 ```
 <img src="images/new13.jpg"/><br/>
 
@@ -281,21 +281,21 @@ For both **source** and **target** connection, the input parameter is referring 
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
 ```
-az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name PostgresCLI --target-connection-json c:\DMS\target.json -–task-type OnlineMigration -n runnowtask    
+az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name <Service Name> --target-connection-json c:\DMS\target.json -–task-type OnlineMigration -n runnowtask    
 ```
 At this point, you've successfully submitted a migration task.<br/>
 <img src="images/new16.jpg"/><br/>
 16. To show progress of the task, **run** the following command:
 ```
-az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask
+az dms project task show --service-name <Service Name> <project name> --resource-group <resource group> --name <task name>
 ```
 <img src="images/new17.jpg"/><br/>
 ```
-az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output
+az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group> --name <task name> --expand output
 ```
 17. You can also query for the **migration State** from the expand output:
 ```
-az dms project task show --service-name PostgresCLI --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
+az dms project task show --service-name <Service Name> --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
 
 ## Exercise 6: Understanding migration task status
