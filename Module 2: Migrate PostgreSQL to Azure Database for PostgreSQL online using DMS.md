@@ -46,12 +46,19 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 ## Exercise 2:	Create an **Azure Database for PostgreSQL** instance
 
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
+* **--resource-group :** Give your **onpremisesrg** Resourse Group name
+* **--name :** Give any unique name for your **Postgresql server**
+* **--location : Give your **Resource Group** location
+* **--admin-user :** **cloudlabs**
+* **--admin-password :** Replace <password> with 'Password!1234'
+* **--sku-name :** **GP_Gen4_2** 
+* **--storage-size :** **51200**
 ```
-az postgres server create --resource-group <resource group name> --name <postgresql server name> --location <existing resource group name> --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
+az postgres server create --resource-group <resource group name> --name <postgresql server name> --location <existing resource group name> --admin-user <admin name> --admin-password '<password>' --sku-name GP_Gen4_2 --storage-size 51200
 ```
 if you have a sign of exclamation in password etc, put the string in quotes to avoid bash conflict.
 
-<br/><img src="images/post51.jpg"/><br/>
+<br/><img src="images/new112.jpg"/><br/>
 
      > Note: Be sure to remember your user name and password as you will need to use it later for your connection information.
      
