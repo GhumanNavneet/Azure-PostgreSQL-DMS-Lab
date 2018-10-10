@@ -48,9 +48,9 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Edit the following command as per below:<br/>
 * **--resource-group :** Give your **onpremisesrg** Resourse Group name
 * **--name :** Give any unique name for your **Postgresql server**
-* **--location :** **southcentralus**
+* **--location : Give your **Resource Group** location
 * **--admin-user :** **cloudlabs**
-* **--admin-password :** Give **Password** for your server
+* **--admin-password :** Give **Password** for your server(Password!1234)
 * **--sku-name :** **GP_Gen4_2** 
 * **--storage-size :** **51200**
 Then copy and paste in **Azure Cloud Shell** command line.
@@ -175,12 +175,11 @@ az vm open-port --port 8000 --resource-group <onpremisesrg resource group name> 
 ```
 <img src="images/post10.jpg"/><br/>
 5.	Hit **Enter**.<br/>
-6.	Connect to the VM using SSH in the Azure CLI.
+6.	Connect to the VM using SSH in the Azure CLI. Replace [publicIpAddress] with the IP address of your "myubuntu" virtual machine.
 ```
 ssh [publicIpAddress]
 ```
 <img src="images/post11.jpg"/><br/>
-   >Note: Replace [publicIpAddress] with the IP address of your server (without brackets) noted in the previous step (2).
 7.	Hit **Enter**.
 8.	When prompted to continue, type **yes** and hit **Enter**.
 
@@ -260,7 +259,10 @@ SECRET_KEY='mys3cr3tk3y'
 DATABASE_URL='postgres://pgsqluser@postgresql:P@ssword1@postgresql.database.windows.net:5432/bootcamp'
 ALLOWED_HOSTS = "*"
 ```
+<img src="images/port4.jpg"/><br/>
+
    >Note: If you look at the credentials closely, you will notice we are using the new Azure Database for PostgreSQL service to connect to this app, and we have pre-populated the connection string.
+   
 15.	On the **VIM Editor Terminal**, to come out of the editing mode.<br/>
 * Press the **ESC** key.<br/>
 * Type **:wr** and hit **Enter**. This writes in the file **.env** and saves it.<br/>
@@ -277,7 +279,8 @@ vim local.py
 
 *  Type **i** to enter **INSERT** mode.
 
-*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and * with a **comma**.  
+*  Look for the **ALLOWED_HOSTS** parameter and **Add** "*", **after** "127.0.0.1". Be sure to separate "127.0.0.1" and * with a **comma**.<br/>
+<img src="images/port3.jpg"/><br/>
 
 19.	**Save** the changes to **local.py**.<br/>
 * **Press** the **ESC** key.<br/>
@@ -291,10 +294,12 @@ cd ~/bootcamp
 ```
 python3 manage.py migrate
 ```
+<img src="images/port2.jpg"/><br/>
 22.	Let's bring the server up. Type the following command and hit **Enter**:
 ```
 python3 manage.py runserver 0.0.0.0:8000
 ```
+<img src="images/port1.jpg"/><br/>
 23.	Now, open a new web browser window, enter the following URL, and hit **Enter**:
 ```
 http://[publicIpAddress]:8000/
@@ -308,7 +313,7 @@ http://[publicIpAddress]:8000/
   >Note: Enter a username; provide an email address; create a password; then create your account
   >Note: The next screen you would see after successful creation of the account is this:
 <img src="images/boot11.jpg"/><br/>
-25.	Let's go to the database and query it directly. Return to Azure Cloud Shell where you have the SSH session and hit Ctrl-C to terminate the web server.
+25.	Let's go to the database and query it directly. Return to **Azure Cloud Shell** where you have the **SSH session** and hit **Ctrl-C** to terminate the web server.
 
 26.	Next, let's terminate our SSH session to **Ubuntu**. Type the following command and hit **Enter**:
 ```
