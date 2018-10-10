@@ -296,10 +296,11 @@ az dms project task show --service-name <Service Name> --project-name <project n
 ```
 az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group> --name <task name> --expand output
 ```
-17. You can also query for the **migration State** from the expand output:
-```
-az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group name> --name <task name> --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
-```
+img src="images/post01.jpg"/><br/>
+
+Ouput will be look like:
+img src="images/output.jpg"/><br/>
+
 
 ## Exercise 6: Understanding migration task status
 In the output file, there are several parameters that indicate progress of migration. For example, see the output file below:
@@ -402,6 +403,7 @@ az dms project task cutover -h
 ```
 az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>  --database-name dvdrental
 ```
+img src="images/cutover.jpg"/><br/>
 2. To monitor the **cutover** progress, run the following command:
 ```
 az dms project task show --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
@@ -417,21 +419,21 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 
 3. To **cancel** a **running task**, use the following command:
 ```
-az dms project task cancel ---service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
+az dms project task cancel --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
+img src="images/cancel.jpg"/><br/>
 4. To **delete** a **running task**, use the following command:
 ```
 az dms project task delete --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
-5. To **cancel** a **running project**, use the following command:
-```
-az dms project task cancel -n <task name> --project-name <project name> --resource-group <resource group name> --service-name <dms name>
-```
-6. To **delete** a **running project**, use the following command:
+img src="images/delete.jpg"/><br/>
+5. To **delete** a **running project**, use the following command:
 ```
 az dms project task delete -n <task name> --project-name <project name> --resource-group <resource group name> --service-name <dms name>
 ```
-7. To **delete DMS** service, use the following command:
+img src="images/delete2.jpg"/><br/>
+6. To **delete DMS** service, use the following command:
 ```
-az dms delete -g --resource-group <resource group name> --service-name <dms name>
+az dms delete -g <resource group name> -n <dms name>
 ```
+img src="images/delete3.jpg"/><br/>
