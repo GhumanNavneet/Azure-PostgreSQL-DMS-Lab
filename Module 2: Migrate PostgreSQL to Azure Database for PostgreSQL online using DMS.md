@@ -207,11 +207,11 @@ az dms -h
 
 7. Next, create a **PostgreSQL** migration **project** by running the following command:
 ```
-az dms project create -l <location> -g <ResourceGroupName> --service-name <yourServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <newProjectName>
+az dms project create -l <location> -g <ResourceGroupName> --service-name <ServiceName> --source-platform PostgreSQL --target-platform AzureDbforPostgreSQL -n <ProjectName>
 ```
 **For example**, the following command creates a project using these parameters:
 
-* Location: **Give yur DMS Location**
+* Location: **Give your DMS Location**
 * Resource Group Name: **Give your cloud rg name here**
 * Service Name: **Give your DMS ServiceName**
 * Project name: **PGMigration**
@@ -290,7 +290,7 @@ At this point, you've successfully submitted a migration task.<br/>
 <img src="images/new16.jpg"/><br/>
 16. To show progress of the task, **run** the following command:
 ```
-az dms project task show --service-name <Service Name> <project name> --resource-group <resource group> --name <task name>
+az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
 <img src="images/new17.jpg"/><br/>
 ```
@@ -298,7 +298,7 @@ az dms project task show --service-name <Service Name> --project-name <project n
 ```
 17. You can also query for the **migration State** from the expand output:
 ```
-az dms project task show --service-name <Service Name> --project-name PGMigration --resource-group PostgresDemo --name Runnowtask --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
+az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group name> --name <task name> --expand output --query 'properties.output[].migrationState | [0]' "READY_TO_COMPLETE"
 ```
 
 ## Exercise 6: Understanding migration task status
@@ -400,11 +400,11 @@ az dms project task cutover -h
 ```
 **For example**:
 ```
-az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>  --database-name dvdrental
+az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>  --database-name dvdrental
 ```
 2. To monitor the **cutover** progress, run the following command:
 ```
-az dms project task show --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
+az dms project task show --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
 
 
@@ -417,21 +417,21 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 
 3. To **cancel** a **running task**, use the following command:
 ```
-az dms project task cancel ---service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
+az dms project task cancel ---service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
 4. To **delete** a **running task**, use the following command:
 ```
-az dms project task delete --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>
+az dms project task delete --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
 5. To **cancel** a **running project**, use the following command:
 ```
-az dms project task cancel -n <task name> --project-name <project name> --resource-group <cloudrg name> --service-name <dms name>
+az dms project task cancel -n <task name> --project-name <project name> --resource-group <resource group name> --service-name <dms name>
 ```
 6. To **delete** a **running project**, use the following command:
 ```
-az dms project task delete -n <task name> --project-name <project name> --resource-group <cloudrg name> --service-name <dms name>
+az dms project task delete -n <task name> --project-name <project name> --resource-group <resource group name> --service-name <dms name>
 ```
 7. To **delete DMS** service, use the following command:
 ```
-az dms delete -g --resource-group <cloudrg name> --service-name <dms name>
+az dms delete -g --resource-group <resource group name> --service-name <dms name>
 ```
