@@ -422,7 +422,7 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 ```
 az dms project task cancel --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
-<img src="images/cancel.jpg"/><br/>
+<img src="images/cancel1.jpg"/><br/>
 
 4. To **delete** a **running task**, use the following command:
 ```
