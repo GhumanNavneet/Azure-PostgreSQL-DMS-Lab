@@ -296,10 +296,10 @@ az dms project task show --service-name <Service Name> --project-name <project n
 ```
 az dms project task show --service-name <Service Name> --project-name <project name> --resource-group <resource group> --name <task name> --expand output
 ```
-img src="images/post01.jpg"/><br/>
+<img src="images/post01.jpg"/><br/>
 
-Ouput will be look like:
-img src="images/output.jpg"/><br/>
+Ouput will be look like:<br/>
+<img src="images/output.jpg"/><br/>
 
 
 ## Exercise 6: Understanding migration task status
@@ -403,7 +403,7 @@ az dms project task cutover -h
 ```
 az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>  --database-name dvdrental
 ```
-img src="images/cutover.jpg"/><br/>
+<img src="images/cutover.jpg"/><br/>
 2. To monitor the **cutover** progress, run the following command:
 ```
 az dms project task show --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
@@ -421,19 +421,19 @@ If you need to cancel or delete any DMS task, project, or service, perform the c
 ```
 az dms project task cancel --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
-img src="images/cancel.jpg"/><br/>
+<img src="images/cancel.jpg"/><br/>
 4. To **delete** a **running task**, use the following command:
 ```
 az dms project task delete --service-name <dms name> --project-name <project name> --resource-group <resource group name> --name <task name>
 ```
-img src="images/delete.jpg"/><br/>
+>img src="images/delete.jpg"/><br/>
 5. To **delete** a **running project**, use the following command:
 ```
 az dms project task delete -n <task name> --project-name <project name> --resource-group <resource group name> --service-name <dms name>
 ```
-img src="images/delete2.jpg"/><br/>
+<img src="images/delete2.jpg"/><br/>
 6. To **delete DMS** service, use the following command:
 ```
 az dms delete -g <resource group name> -n <dms name>
 ```
-img src="images/delete3.jpg"/><br/>
+<img src="images/delete3.jpg"/><br/>
