@@ -47,7 +47,7 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Copy and paste the following into the **Azure** command line:<br/>
 ```
-az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
+az postgres server create --resource-group <resource group name> --name <postgresql server name> --location <existing resource group name> --admin-user <admin name> --admin-password <password> --sku-name GP_Gen4_2 --storage-size 51200
 ```
 if you have a sign of exclamation in password etc, put the string in quotes to avoid bash conflict.
 
@@ -158,9 +158,9 @@ pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
 ```
 **For example**, to dump a schema file **dvdrental** database:
 ```
-pg_dump -o -h localhost -U postgres -d dvdrental -s  > dvdrentalSchema.sql
+pg_dump -o -h localhost -U postgres --no-owner --no-acl -d dvdrental -s  > C:\DMS\dvdrentalSchema.sql
 ```
-<img src="images/new10.jpg"/><br/>
+<img src="images/new101.jpg"/><br/>
 
 5. **Import** the schema into the target database you created by restoring the schema dump file.
 ```
@@ -168,9 +168,9 @@ psql -h hostname -U db_username -d db_name < your_schema.sql
 ```
 **For example:**
 ```
-psql -h mypgserver-20170401.postgres.database.azure.com  -U postgres -d dvdrental < dvdrentalSchema.sql
+psql -h postgresqlserverx.postgres.database.azure.com -U cloudlabs@postgresqlserverx -d dvdrental < C:\DMS\dvdrentalSchema.sql
 ```
-<img src="images/new11.jpg"/><br/>
+<img src="images/new111.jpg"/><br/>
 
 ```
 Please note that you will get few access denied errors when importing schema. You can ignore them and proceed
@@ -268,7 +268,7 @@ For both **source** and **target** connection, the input parameter is referring 
 "userName": "Server Admin Server Name",
 "password": null, 
 "serverName": "Postgres Server Name", 
-"databaseName": "inventory",
+"databaseName": "dvdrental",
 "port": 5432
 }
 ```
@@ -307,13 +307,13 @@ In the output file, there are several parameters that indicate progress of migra
         "cdcDeleteCounter": 0       // Total delete operation  applied after full load
         "cdcInsertCounter": 0,      // Total insert operation applied after full load
         "cdcUpdateCounter": 0,      // Total update operation applied after full load
-        "databaseName": "inventory",
+        "databaseName": "dvdrental",
         "endedOn": null,
         "fullLoadCompletedTables": 2,   //Number of tables completed full load
         "fullLoadErroredTables": 0, //Number of tables that contain migration error
         "fullLoadLoadingTables": 0, //Number of tables that are in loading status
         "fullLoadQueuedTables": 0,  //Number of tables that are in queued status
-        "id": "db|inventory",
+        "id": "db|dvdrental",
         "incomingChanges": 0,       //Number of changes after full load
         "initializationCompleted": true,
         "latency": 0,
@@ -338,13 +338,13 @@ In the output file, there are several parameters that indicate progress of migra
         "cdcInsertCounter": 0,
         "cdcUpdateCounter": 0,
         "dataErrorsCount": 0,
-        "databaseName": "inventory",
+        "databaseName": "dvdrental",
         "fullLoadEndedOn": "2018-07-05T23:36:20.740701+00:00",  //Full load completed time
         "fullLoadEstFinishTime": "1970-01-01T00:00:00+00:00",
         "fullLoadStartedOn": "2018-07-05T23:36:15.864552+00:00",    //Full load started time
         "fullLoadTotalRows": 10,                    //Number of rows loaded in full load
         "fullLoadTotalVolumeBytes": 7056,               //Volume in Bytes in full load
-        "id": "or|inventory|public|actor",          
+        "id": "or|dvdrental|public|actor",          
         "lastModifiedTime": "2018-07-05T23:36:16.880174+00:00",
         "resultType": "TableLevelOutput",
         "state": "COMPLETED",                   //State of migration for this table
@@ -356,13 +356,13 @@ In the output file, there are several parameters that indicate progress of migra
         "cdcInsertCounter": 50,
         "cdcUpdateCounter": 0,
         "dataErrorsCount": 0,
-        "databaseName": "inventory",
+        "databaseName": "dvdrental",
         "fullLoadEndedOn": "2018-07-05T23:36:23.963138+00:00",
         "fullLoadEstFinishTime": "1970-01-01T00:00:00+00:00",
         "fullLoadStartedOn": "2018-07-05T23:36:19.302013+00:00",
         "fullLoadTotalRows": 112,
         "fullLoadTotalVolumeBytes": 46592,
-        "id": "or|inventory|public|address",
+        "id": "or|dvdrental|public|address",
         "lastModifiedTime": "2018-07-05T23:36:20.308646+00:00",
         "resultType": "TableLevelOutput",
         "state": "COMPLETED",
@@ -397,7 +397,7 @@ az dms project task cutover -h
 ```
 **For example**:
 ```
-az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>  --database-name Inventory
+az dms project task cutover --service-name <dms name> --project-name <project name> --resource-group <cloudrg name> --name <task name>  --database-name dvdrental
 ```
 2. To monitor the **cutover** progress, run the following command:
 ```
