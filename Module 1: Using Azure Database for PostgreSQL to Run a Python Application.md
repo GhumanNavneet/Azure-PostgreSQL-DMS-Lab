@@ -48,7 +48,7 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 1. A server contains a group of databases. You can create an **Azure Database for PostgreSQL** server using the **az postgres server create** command. Edit the following command as per below:<br/>
 * **--resource-group :** Give your **onpremisesrg** Resourse Group name
 * **--name :** Give any unique name for your **Postgresql server**
-* **--location : Give your **Resource Group** location
+* **--location :** Give your **Resource Group** location
 * **--admin-user :** **cloudlabs**
 * **--admin-password :** Replace <password> with 'Password!1234'
 * **--sku-name :** **GP_Gen4_2** 
