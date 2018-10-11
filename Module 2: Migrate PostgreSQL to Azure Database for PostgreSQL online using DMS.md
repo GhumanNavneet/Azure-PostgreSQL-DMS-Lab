@@ -284,7 +284,7 @@ For both **source** and **target** connection, the input parameter is referring 
 * Source platform: **PostgreSQL**
 * Target platform: **AzureDbForPostgreSql**
 ```
-az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name <Service Name> --target-connection-json c:\DMS\target.json -–task-type OnlineMigration -n runnowtask    
+az dms project task create -g <resource group name> --project-name <project name> --source-platform postgresql --target-platform azuredbforpostgresql --source-connection-json c:\DMS\source.json --database-options-json C:\DMS\option.json --service-name <Service Name> --target-connection-json c:\DMS\target.json --task-type OnlineMigration -n runnowtask    
 ```
 At this point, you've successfully submitted a migration task.<br/>
 <img src="images/new16.jpg"/><br/>
