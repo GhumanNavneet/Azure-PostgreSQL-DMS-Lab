@@ -325,7 +325,7 @@ psql --host=<servver name> --port=5432 --username=<server admin login name> --db
 ```
 <img src="images/boot12.jpg"/><br/>
 
-28.	If prompted for a password, type P@ssword1 at the prompt and hit **Enter**.
+28.	If prompted for a password, type your password at the prompt and hit **Enter**.
 
   >Note: the psql shell will not echo what you type.
 29.	Type in the following command and hit **Enter**.
