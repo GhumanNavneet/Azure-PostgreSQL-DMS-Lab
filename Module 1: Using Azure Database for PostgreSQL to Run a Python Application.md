@@ -32,7 +32,7 @@ This hands-on lab will step you through the following:
 <img src="images/shell.jpg"/><br/>
 6.	Once the shell launches, you will see **Welcome to Azure Cloud Shell**. Click on the **Bash (Linux)** option at the bottom.<br/>
 <img src="images/post1.jpg"/><br/>
-7.	In the **You have no storage mounted** tab, click on **Show Advanced Settings**.<br/>
+7.	In that **You have no storage mounted** tab, click on **Show Advanced Settings**.<br/>
 <img src="images/post2.jpg"/><br/>
 8.	In the **Advanced Settings** tab, use the existing **Resource Group** and enter a unique name for the **Storage Account** and **File Share**.<br/>
 <img src="images/post3.jpg"/><br/>
@@ -52,10 +52,10 @@ You may enlarge the shell by dragging the border or clicking on the maximize but
 * **--admin-user :** **cloudlabs**
 * **--admin-password :** Replace <password> with 'Password!1234'
 * **--sku-name :** **GP_Gen4_2** 
-* **--storage-size :** **51200**
+* **--storage-size :** **51200**<br/>
 Then copy and paste in **Azure Cloud Shell** command line.
 ```
-az postgres server create --resource-group <resource group name> --name <postgresql server name> --location southcentralus --admin-user <admin name> --admin-password '<password>' --sku-name GP_Gen4_2 --storage-size 51200
+az postgres server create --resource-group <resource group name> --name <postgresql server name> --location <location> --admin-user <admin name> --admin-password '<password>' --sku-name GP_Gen4_2 --storage-size 51200
 ```
 <br/><img src="images/new112.jpg"/><br/>
 
