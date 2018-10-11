@@ -20,7 +20,7 @@ This hands-on lab will step you through the following:
 **Exercise 5 :   Configure the Bootcamp Application.**<br/>
 
 
-## Exercise 1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI.
+## Exercise 1:	Create an Azure storage account and initialize Azure Cloud Shell for Azure CLI
 
 1.  **Navigate** to https://portal.azure.com and login (from provided credentials).
 2.  **Enter** the **Username** which was displayed in the previous window and **click** on **Next**.<br/>
