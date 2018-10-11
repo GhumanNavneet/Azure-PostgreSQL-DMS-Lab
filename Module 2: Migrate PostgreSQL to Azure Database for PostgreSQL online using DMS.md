@@ -151,7 +151,7 @@ You connected to the Azure Database for PostgreSQL server via psql in Cloud Shel
 ## Exercise 4: Migrate the sample schema
 To complete all the database objects like table schemas, indexes and stored procedures, we need to extract schema from the source database and apply to the database.<br/>
 
-1. Login to **dms-dev-vm** and download **Remote Desktop Connection** file.<br/>
+1. Go to virtual machine, select the **dsm-dev-vm** from the overview section, click on **Connect** button and download **Remote Desktop Connection** for connecting to virtual machine file.<br/>
 <img src="images/new8.jpg"/><br/>
 2. Inside the virtual machine click on **Start** button search for **command prompt**, run it as **administrator**.</br> 
 <img src="images/new9.jpg"/><br/>
