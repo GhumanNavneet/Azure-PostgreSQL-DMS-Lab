@@ -157,7 +157,7 @@ To complete all the database objects like table schemas, indexes and stored proc
 <img src="images/new9.jpg"/><br/>
 3. Use **pg_dump** command to create a **schema dump** file for a database.
 ```
-pg_dump -o -h hostname -U db_username -d db_name -s > your_schema.sql
+pg_dump -o -h hostname -U db_username --no-owner --no-acl -d db_name -s > your_schema.sql
 ```
 **For example**, to dump a schema file **dvdrental** database:
 ```
